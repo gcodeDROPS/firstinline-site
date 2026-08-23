@@ -3124,7 +3124,7 @@ function render(){
   ].map(c=>`<div class="stat-card"><b class="">${c[1]}</b><span>${c[0]}</span></div>`).join('');
 
   const q=(document.getElementById('search').value||'').toLowerCase();
-  const active=document.querySelector('.chip.active');
+  const active=document.querySelector('.chip.active:not(.role-chip)');
   const filter=active?active.dataset.status:'all';
   const rActive=document.querySelector('.role-chip.active');
   const rFilter=rActive?rActive.dataset.role:'all';
