@@ -87,6 +87,9 @@
   .role-controls { margin-top: 8px; gap: 6px; align-items: center; }
   .role-label { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
   .role-chip { padding: 6px 12px; font-size: .78rem; }
+  .sort-controls { margin-bottom: 8px; }
+  .sort-select { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: .85rem; cursor: pointer; }
+  .sort-select:focus { outline: none; border-color: var(--primary); }
   .role-badge { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; font-size: .68rem; font-weight: 700; border: 1px solid; vertical-align: middle; }
   .lead { display: flex; align-items: flex-start; gap: 16px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; background: var(--card); transition: border-color .15s; }
   .lead:hover { border-color: rgba(59,130,246,.45); }
@@ -237,6 +240,14 @@
       <button class="chip" data-status="applied">Applied</button>
       <button class="chip" data-status="replied">Replied</button>
       <button class="chip" data-status="interview">Interview</button>
+    </div>
+    <div class="app-controls sort-controls">
+      <span class="role-label">Sort:</span>
+      <select id="sortSel" class="sort-select">
+        <option value="score">Top score</option>
+        <option value="source">Source found</option>
+        <option value="newest">Newest first</option>
+      </select>
     </div>
     <div class="app-controls role-controls">
       <span class="role-label">Role:</span>
@@ -2978,7 +2989,30 @@ function render(){
     const ms=filter==='all'||statusOf(l)===filter;
     const mr=rFilter==='all'||String(l.role_type||'other')===rFilter;
     return mq&&ms&&mr;
-  }).sort((a,b)=>b.score-a.score);
+  }).sort(sortLeads);
+
+function sortLeads(a,b){
+  var s=document.getElementById('sortSel');
+  var mode=s?s.value:'score';
+  if(mode==='source'){
+    var sa=srcGroup(a.source), sb=srcGroup(b.source);
+    if(sa!==sb) return sa<sb?-1:1;
+    return b.score-a.score;
+  }
+  if(mode==='newest'){
+    var da=(a.created_at||'').slice(0,10), db=(b.created_at||'').slice(0,10);
+    if(da&&db&&da!==db) return da<db?1:-1;
+    return b.score-a.score;
+  }
+  return b.score-a.score;
+}
+function srcGroup(s){
+  s=String(s||'').toLowerCase();
+  if(s.includes('greenhouse')) return '1';
+  if(s.includes('ashby')) return '2';
+  if(s.includes('linkedin')) return '3';
+  return '4';
+}
 
   const el=document.getElementById('leadList');
   if(!list.length){el.innerHTML='';document.getElementById('empty').style.display='block';return;}
@@ -3063,6 +3097,7 @@ document.querySelectorAll('.role-chip').forEach(c=>c.addEventListener('click',()
   c.classList.add('active');render();
 }));
 document.getElementById('search').addEventListener('input',render);
+document.getElementById('sortSel').addEventListener('change',render);
 document.getElementById('waitlistForm').addEventListener('submit',function(e){
   e.preventDefault();
   var em=document.getElementById('wlEmail');
