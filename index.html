@@ -1,0 +1,3091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FirstInLine — Find the B2B sales job before everyone else does</title>
+<meta name="description" content="FirstInLine finds B2B sales jobs before they flood — direct ATS postings, stealth startups, and managers hiring on LinkedIn — with AI-written outreach that gets replies.">
+<style>
+  :root {
+    --bg: #090d16; --bg2: #0b1120; --card: #111827; --border: #1e293b;
+    --primary: #3b82f6; --glow: rgba(59,130,246,.25); --accent: #10b981;
+    --text: #f8fafc; --muted: #94a3b8; --gold: #f59e0b; --red: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--primary); text-decoration: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(9,13,22,.86); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; max-width: 1100px; margin: 0 auto; }
+  .logo { font-weight: 800; font-size: 1.22rem; letter-spacing: -.5px; }
+  .logo span { color: var(--primary); }
+  .nav-links { display: flex; align-items: center; gap: 22px; }
+  .nav-links a { color: var(--muted); font-size: .92rem; }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero { padding: 76px 24px 56px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -220px; left: 50%; transform: translateX(-50%); width: 900px; height: 520px; background: radial-gradient(ellipse, rgba(59,130,246,.18), transparent 60%); pointer-events: none; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(59,130,246,.12); border: 1px solid rgba(59,130,246,.35); color: var(--primary); padding: 6px 16px; border-radius: 999px; font-size: .8rem; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; margin-bottom: 26px; }
+  .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  h1 { font-size: clamp(2.3rem, 5.5vw, 3.6rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.12; }
+  h1 .grad { background: linear-gradient(90deg, #3b82f6, #10b981); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--muted); font-size: 1.16rem; max-width: 640px; margin: 20px auto 30px; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 13px 28px; border-radius: 10px; font-weight: 700; font-size: 1rem; transition: all .15s; cursor: pointer; border: none; }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 24px var(--glow); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 36px var(--glow); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--muted); }
+  .btn-sm { padding: 8px 14px; font-size: .85rem; }
+  .hero-note { color: var(--muted); font-size: .82rem; margin-top: 14px; }
+
+  .live-stats { max-width: 760px; margin: 44px auto 0; display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 14px; }
+  .hero-mini { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+  .hero-mini b { display: block; font-size: 1.7rem; font-weight: 800; color: var(--primary); }
+  .hero-mini span { color: var(--muted); font-size: .82rem; }
+
+  section { padding: 72px 24px; }
+  .sec-label { color: var(--primary); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; text-align: center; margin-bottom: 12px; }
+  h2 { text-align: center; font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 800; letter-spacing: -.8px; margin-bottom: 16px; }
+  .sec-sub { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto 44px; font-size: 1.05rem; }
+
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .prob { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+  .prob .x { color: var(--red); font-weight: 800; font-size: 1.1rem; }
+  .prob h3 { font-size: 1rem; margin: 8px 0 6px; }
+  .prob p { color: var(--muted); font-size: .9rem; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 30px; }
+  .step-num { width: 38px; height: 38px; border-radius: 10px; background: rgba(59,130,246,.15); color: var(--primary); font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 1.05rem; }
+  .step h3 { font-size: 1.1rem; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: .95rem; }
+
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+  .feat { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; transition: border-color .15s; }
+  .feat:hover { border-color: rgba(59,130,246,.5); }
+  .feat h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .feat p { color: var(--muted); font-size: .93rem; }
+
+  .app { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .app-head h2 { text-align: center; }
+  .app-sub { text-align: center; color: var(--muted); margin-bottom: 20px; }
+  .app-notice { background: rgba(59,130,246,.08); border: 1px dashed rgba(59,130,246,.4); color: var(--muted); padding: 12px 16px; border-radius: 10px; font-size: .85rem; margin-bottom: 20px; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; }
+  .stat-card b { display: block; font-size: 1.7rem; font-weight: 800; }
+  .stat-card span { color: var(--muted); font-size: .8rem; }
+  .stat-card .s-new { color: var(--primary); } .stat-card .s-applied { color: var(--gold); } .stat-card .s-replied { color: var(--accent); } .stat-card .s-interview { color: #a78bfa; } .stat-card .s-offer { color: var(--accent); }
+  .app-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; align-items: center; }
+  .app-controls .search { flex: 1; min-width: 200px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px; font-size: .92rem; }
+  .app-controls .search:focus { outline: none; border-color: var(--primary); }
+  .chip { background: var(--bg); border: 1px solid var(--border); color: var(--muted); padding: 9px 14px; border-radius: 999px; font-size: .85rem; cursor: pointer; }
+  .chip.active { border-color: var(--primary); color: var(--primary); font-weight: 600; }
+  .role-controls { margin-top: 8px; gap: 6px; align-items: center; }
+  .role-label { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .role-chip { padding: 6px 12px; font-size: .78rem; }
+  .role-badge { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; font-size: .68rem; font-weight: 700; border: 1px solid; vertical-align: middle; }
+  .lead { display: flex; align-items: flex-start; gap: 16px; padding: 18px; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; background: var(--card); transition: border-color .15s; }
+  .lead:hover { border-color: rgba(59,130,246,.45); }
+  .lead .score { min-width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
+  .score.hi { background: rgba(16,185,129,.15); color: var(--accent); }
+  .score.mid { background: rgba(245,158,11,.15); color: var(--gold); }
+  .score.low { background: rgba(148,163,184,.13); color: var(--muted); }
+  .lead .info { flex: 1; min-width: 0; }
+  .co-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .lead .info b { font-size: 1rem; }
+  .lead .info .role { font-size: .86rem; color: var(--text); opacity: .8; margin-top: 1px; }
+  .lead .info .why { font-size: .82rem; color: var(--muted); margin-top: 4px; }
+  .lead .info .details { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .dchip { font-size: .72rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+  .dchip b { color: var(--text); font-weight: 600; }
+  .tag { font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+  .tag.gh { background: rgba(59,130,246,.15); color: var(--primary); }
+  .tag.ash { background: rgba(139,92,246,.15); color: #a78bfa; }
+  .tag.li { background: rgba(14,165,233,.15); color: #38bdf8; }
+  .tag.md { background: rgba(148,163,184,.15); color: var(--muted); }
+  .stat-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; padding: 3px 9px; border-radius: 6px; font-weight: 700; }
+  .st.new { background: rgba(59,130,246,.15); color: var(--primary); }
+  .st.applied { background: rgba(245,158,11,.15); color: var(--gold); }
+  .st.replied { background: rgba(16,185,129,.15); color: var(--accent); }
+  .st.interview { background: rgba(167,139,250,.15); color: #a78bfa; }
+  .st-offer { background: rgba(16,185,129,.25); color: var(--accent); }
+  .lead-meta { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .note { margin-top: 8px; font-size: .8rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-style: italic; }
+  .lead .actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0; }
+  .lead-links { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+  .lead-links a, .lead-links button { font-size: .72rem; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; }
+  .lead-links a:hover, .lead-links button:hover { border-color: var(--primary); color: var(--text); }
+  .st-actions { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+  .st-actions button { font-size: .72rem; padding: 4px 9px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; }
+  .st-actions button.on { border-color: var(--accent); color: var(--accent); }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+
+  .case { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .case-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; }
+  .case-card .badge2 { display: inline-block; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 3px 10px; border-radius: 6px; margin-bottom: 12px; }
+  .case-card .b-green { background: rgba(16,185,129,.15); color: var(--accent); }
+  .case-card .b-blue { background: rgba(59,130,246,.15); color: var(--primary); }
+  .case-card .b-gold { background: rgba(245,158,11,.15); color: var(--gold); }
+  .case-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+  .case-card p { color: var(--muted); font-size: .92rem; }
+  .case-card .move { margin-top: 12px; font-size: .85rem; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  .case-card .move b { color: var(--accent); }
+
+  .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 760px; margin: 0 auto; }
+  .plan { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 32px; }
+  .plan.pop { border-color: var(--primary); box-shadow: 0 0 50px var(--glow); position: relative; }
+  .plan.pop .tag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; font-size: .72rem; font-weight: 700; padding: 5px 16px; border-radius: 999px; letter-spacing: .5px; text-transform: uppercase; white-space: nowrap; }
+  .plan h3 { font-size: 1.1rem; }
+  .plan .price { font-size: 2.4rem; font-weight: 800; margin: 12px 0 4px; }
+  .plan .price small { font-size: .9rem; color: var(--muted); font-weight: 400; }
+  .plan .perk { color: var(--muted); font-size: .85rem; margin-bottom: 18px; }
+  .plan ul { list-style: none; margin: 0 0 24px; }
+  .plan li { color: var(--muted); font-size: .93rem; padding: 7px 0; border-bottom: 1px solid rgba(30,41,59,.6); }
+  .plan li:last-child { border-bottom: none; }
+  .plan li b { color: var(--text); }
+  .plan .btn { width: 100%; text-align: center; display: block; }
+
+  .faq { max-width: 720px; margin: 0 auto; }
+  details { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
+  summary { cursor: pointer; font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  summary::after { content: '+'; color: var(--primary); font-size: 1.3rem; font-weight: 700; }
+  details[open] summary::after { content: '−'; }
+  details p { color: var(--muted); font-size: .93rem; margin-top: 10px; }
+
+  .cta-box { text-align: center; background: linear-gradient(180deg, rgba(59,130,246,.1), transparent); border: 1px solid var(--border); border-radius: 20px; padding: 60px 32px; max-width: 780px; margin: 0 auto; }
+  .cta-box h2 { margin-bottom: 12px; }
+  .cta-box p { color: var(--muted); margin-bottom: 26px; }
+
+  footer { border-top: 1px solid var(--border); padding: 34px 24px; text-align: center; color: var(--muted); font-size: .85rem; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--text); }
+  footer .f-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(90px); background: var(--primary); color: #fff; padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: .9rem; box-shadow: 0 8px 30px rgba(0,0,0,.4); transition: transform .3s; z-index: 99; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta) { display: none; }
+    .lead { flex-wrap: wrap; }
+    .lead .actions { width: 100%; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">First<span>InLine</span></div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#app">Live demo</a>
+      <a href="#case">Real results</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/docs/" class="nav-cta">Docs</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span> Built by a sales rep, for sales reps</span>
+    <h1>Find the B2B sales job<br>before <span class="grad">everyone else does.</span></h1>
+    <p class="sub">FirstInLine finds direct ATS postings, stealth startups, and managers hiring on LinkedIn — then writes the outreach that gets replies. Your job search, run like a sales pipeline.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#app">See it live with real data ↓</a>
+      <a class="btn btn-ghost" href="#join">Get early access</a>
+    </div>
+    <div class="hero-note">Free tier · No credit card · This page runs your real demo data</div>
+
+    <div class="live-stats" id="heroStats"></div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-label">How it works</div>
+    <h2>Your search, run like a sales motion</h2>
+    <p class="sec-sub">Three steps — the same ones you'd use to build any pipeline. Scroll down to see it running on real data.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Discover early</h3><p>Targeted crawls hit direct Greenhouse/Ashby ATS boards, VC & YC portfolio pages, and LinkedIn hiring posts — before the flood.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Qualify with AI</h3><p>Every lead is scored against your resume (90-99), the real company is extracted, and you get a one-line "why you fit."</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Send outreach that replies</h3><p>One click generates a 150-char LinkedIn note + short cold email, personalized per company. Track it all the way to offer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="app" class="app">
+  <div class="wrap">
+    <div class="sec-label">Live demo — real data</div>
+    <div class="app-head">
+      <h2>Your pipeline, as it runs</h2>
+      <div class="app-sub">The actual tool, populated with a real scrape. Filter, advance statuses, copy outreach — it all works.</div>
+    </div>
+
+    <div class="app-notice">🔒 <b>Demo mode:</b> this is my real job-hunt data shown as a working example. Statuses are saved in your browser only — nothing is shared or sent.</div>
+
+    <div class="stats-row" id="statsRow"></div>
+
+    <div class="app-controls">
+      <input class="search" id="search" type="text" placeholder="Search company or role…">
+      <button class="chip active" data-status="all">All</button>
+      <button class="chip" data-status="new">New</button>
+      <button class="chip" data-status="applied">Applied</button>
+      <button class="chip" data-status="replied">Replied</button>
+      <button class="chip" data-status="interview">Interview</button>
+    </div>
+    <div class="app-controls role-controls">
+      <span class="role-label">Role:</span>
+      <button class="chip role-chip active" data-role="all">All</button>
+      <button class="chip role-chip" data-role="sdr">SDR</button>
+      <button class="chip role-chip" data-role="bdr">BDR</button>
+      <button class="chip role-chip" data-role="inside">Inside Sales</button>
+      <button class="chip role-chip" data-role="ae">AE</button>
+      <button class="chip role-chip" data-role="other">Other</button>
+    </div>
+
+    <div id="leadList"></div>
+    <div class="empty" id="empty" style="display:none;">No leads match this view.</div>
+  </div>
+</section>
+
+<section id="case">
+  <div class="wrap">
+    <div class="sec-label">Real results</div>
+    <h2>What the signal finds</h2>
+    <p class="sec-sub">Actual leads from an actual run — the early, high-value stuff generic boards never surface.</p>
+    <div class="case">
+      <div class="case-card">
+        <span class="badge2 b-green">Bullseye</span>
+        <h3>RASPIRE (YC)</h3>
+        <p>No-code runtime security for mobile apps. AI-configured defenses against tampering, hooking, and reverse engineering — the exact territory a security researcher can demo better than the sales team.</p>
+        <div class="move"><b>Move:</b> no public role posted → pitched the founding-GTM role direct to the CTO. Zero competition.</div>
+      </div>
+      <div class="case-card">
+        <span class="badge2 b-blue">Insider edge</span>
+        <h3>Lanesurf (YC) — $160-170K OTE</h3>
+        <p>AI agents that book freight loads in minutes, backed by General Catalyst, YC, and Jawed Karim. Founding SDR, interview process published.</p>
+        <div class="move"><b>Found early:</b> surfaced before it hit mainstream boards. Process is public: founders → assignment → offer.</div>
+      </div>
+      <div class="case-card">
+        <span class="badge2 b-gold">Signal</span>
+        <h3>Adaptive Security — BDR (97)</h3>
+        <p>Direct Ashby posting, cybersecurity, remote. Highest match score in the run.</p>
+        <div class="move"><b>Outreach:</b> ready-to-send 150-char note, drafted by AI. First in line, not buried in a pile.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="sec-label">Pricing</div>
+    <h2>Simple. And honest.</h2>
+    <p class="sec-sub">Free to start. Pro when you're serious. Cancel anytime.</p>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <div class="perk">For getting a feel for the signal.</div>
+        <ul>
+          <li><b>5 leads</b> per run</li>
+          <li><b>Weekly</b> discovery runs</li>
+          <li>Basic application tracker</li>
+          <li>Email digest</li>
+        </ul>
+        <a class="btn btn-ghost" href="#join">Join free</a>
+      </div>
+      <div class="plan pop">
+        <div class="tag">Launch price</div>
+        <h3>Pro</h3>
+        <div class="price">$19 <small>/mo</small></div>
+        <div class="perk">For the serious search. Launch price, goes to $29.</div>
+        <ul>
+          <li><b>Unlimited leads</b> per run</li>
+          <li><b>Daily</b> discovery runs</li>
+          <li><b>AI outreach generator</b> — notes + emails</li>
+          <li>Full pipeline CRM</li>
+          <li>Hiring-manager searches</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn btn-primary" href="#join">Get Pro at launch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="cta-box">
+      <img alt="" style="display:none;">
+      <h2>Coming soon.</h2>
+      <p>This page is the working product with real data. When you're ready to productize it for others, drop your email and I'll take it from there.</p>
+      <form id="waitlistForm" style="display:flex; gap:10px; max-width:440px; margin:0 auto; flex-wrap:wrap;">
+        <input id="wlEmail" type="email" required placeholder="you@company.com" style="flex:1; min-width:200px; background:#0b1120; border:1px solid #1e293b; color:#f8fafc; padding:13px 16px; border-radius:10px; font-size:.95rem;">
+        <button class="btn btn-primary" type="submit">Notify me</button>
+      </form>
+      <p style="font-size:.8rem; color:var(--muted); margin-top:14px;">Working product — your email is saved to the backend and goes straight to me.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-links">
+    <a href="#how">How it works</a>
+    <a href="#app">Live demo</a>
+    <a href="#case">Results</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/docs/">Docs & downloads</a>
+  </div>
+  <p>FirstInLine — demo build · <a href="mailto:josephg0407@proton.me">josephg0407@proton.me</a> · <a href="https://github.com/JGoyd">github.com/JGoyd</a> · <a href="/resume.pdf">Resume (PDF)</a></p>
+  <p style="margin-top:6px; font-size:.78rem;">© 2026 FirstInLine · Working name · Demo only, not for public distribution</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const LEADS = [
+{
+"co": "SecurityScorecard",
+"title": "Business Development Associate",
+"score": 98,
+"source": "oxylabs",
+"why": "It is a direct match for Joseph's 3.5+ years in cybersecurity B2B SaaS BDR roles, focusing on outbound pipeline generation and booking meetings for field sales reps.",
+"note": "Hey [Name], saw your BDA opening at SecurityScorecard. I've booked meetings for FSRs in cyber SaaS, scaling pipeline by $1.2M+. Let's connect!",
+"url": "https://job-boards.greenhouse.io/securityscorecard/jobs/8012738",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I’ve been following SecurityScorecard’s leadership in cyber risk ratings and wanted to reach out regarding the Business Development Associate role.\n\nW...",
+"role_type": "bdr"
+},
+{
+"co": "IRONSCALES",
+"title": "Business Development Representative (BDR)",
+"score": 98,
+"source": "oxylabs",
+"why": "IRONSCALES is an email security SaaS company in Atlanta perfectly matching Joseph's cybersecurity BDR background and enterprise prospecting experience.",
+"note": "Hey! LovedIRONSCALES' email security growth in ATL. I've scaled cyber pipeline 110%+ at FortifyData & Cyberbit. Open to a quick chat?",
+"url": "https://www.linkedin.com/jobs/sdr-jobs-atlanta-ga",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "Cybersecurity",
+"tech_stack": "Salesforce",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI’ve been following IRONSCALES' rapid growth in the email security space and love your innovative approach to protecting enterprises from advanced phishing threats. \n\nWit...",
+"role_type": "sdr"
+},
+{
+"co": "Doppel",
+"title": "Mid-Enterprise Account Executive - Atlanta",
+"score": 95,
+"source": "oxylabs",
+"why": "This is an exceptional fit because it leverages Joseph's 3.5+ years of cybersecurity SaaS sales experience, enterprise prospecting skills, and proven ability to close and manage accounts.",
+"note": "Hey [Name], saw Doppel's Atlanta AE role. As a former D1 athlete with 3.5+ yrs closing cybersecurity SaaS, I'd love to connect on driving pipeline.",
+"url": "https://job-boards.greenhouse.io/doppel/jobs/4253575009",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Doppel’s growth in the security space and noticed the Mid-Enterprise AE opening in Atlanta. With over 3.5 years of B2B SaaS and cybersecurity sales experience—includ...",
+"role_type": "ae"
+},
+{
+"co": "SecurityScorecard",
+"title": "Business Development Representative, Public Sector",
+"score": 95,
+"source": "oxylabs",
+"why": "It directly matches Joseph's 3.5+ years of B2B cybersecurity SaaS and risk quantification sales experience.",
+"note": "Hey [Name], saw the SecOps BDR role. I've scaled cyber pipeline by $1.2M+ and hit 110%+ quota at FortifyData & Cyberbit. Would love to connect!",
+"url": "https://job-boards.greenhouse.io/securityscorecard/jobs/8124625",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week.\n\nI’ve been following SecurityScorecard’s leadership in cyber risk ratings and noticed your open Public Sector BDR role. With over 3.5 years of B2B Saa...",
+"role_type": "bdr"
+},
+{
+"co": "SentinelOne",
+"title": "Sales / Sales Development (Americas)",
+"score": 95,
+"source": "oxylabs",
+"why": "Joseph has 3.5+ years of cybersecurity SaaS BDR experience scaling pipeline at Cyberbit and FortifyData, making him a prime fit for SentinelOne's sales team.",
+"note": "Loved seeing SentinelOne scale AI security! As a cyber SaaS BDR hitting 110%+ quota, I’d love to bring my outbound playbook to your team.",
+"url": "https://job-boards.greenhouse.io/sentinellabs/jobs/6284948003",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Cybersecurity",
+"tech_stack": "AI-Powered Security",
+"outreach_email": "Hi [Name],\n\nI’ve been following SentinelOne’s rapid growth in AI-powered cybersecurity and love your approach to endpoint protection.\n\nWith 3.5+ years of B2B SaaS cybersecurity sales experience—inc...",
+"role_type": "sdr"
+},
+{
+"co": "Pragmatike",
+"title": "Founding Sales Development Representative",
+"score": 95,
+"source": "oxylabs",
+"why": "Joseph's track record of scaling outbound pipelines and mentoring reps at early-stage tech companies makes him an ideal Founding SDR to build their sales engine.",
+"note": "Saw you're scaling the outbound engine at Pragmatike. As an early-stage BDR who drove $1.2M+ pipeline and mentored reps, I'd love to connect!",
+"url": "https://jobs.ashbyhq.com/pragmatike/8c273e1d-2071-4456-a18c-daba16d1bb33",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI noticed Pragmatike is scaling up its outbound sales engine and looking for a Founding SDR to drive early growth. \n\nWith 3.5+ years of B2B SaaS and cybersecurity sales experience—includ...",
+"role_type": "sdr"
+},
+{
+"co": "Netic",
+"title": "Founding SDR",
+"score": 95,
+"source": "oxylabs",
+"why": "Joseph's track record as a senior cyber BDR and his founding-level execution make him an ideal fit to build pipeline from scratch at an early-stage startup.",
+"note": "Hey! Scaled cyber pipeline past $1.2M+ at Cyberbit & FortifyData. Would love to bring that founding execution to Netic. Open to chat?",
+"url": "https://jobs.ashbyhq.com/netic/58acae5c-c9fe-49a5-86e2-c8dd858fffa3",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been tracking Netic's growth and noticed you are scaling out your founding SDR team. With 3.5+ years of B2B SaaS and cybersecurity experience—including generating $1.2M+ in pipeline ...",
+"role_type": "sdr"
+},
+{
+"co": "Salesforce",
+"title": "Business Development Representative - Atlanta",
+"score": 95,
+"source": "oxylabs",
+"why": "Joseph brings 3.5+ years of top-tier SaaS sales experience, a track record of exceeding quota by 110%+, and deep expertise in Salesforce CRM workflows.",
+"note": "Hi [Name], I'm a former D1 athlete & Sr BDR who has exceeded quota 110%+ in SaaS sales. I'd love to bring my outbound execution to Salesforce in At...",
+"url": "https://www.linkedin.com/jobs/view/business-development-representative-atlanta-at-salesforce-4414687434",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Salesforce",
+"outreach_email": "Hi [Name],\n\nI’ve been following Salesforce’s continued growth in Atlanta and wanted to connect. As a former D1 athlete from Georgia Southern with 3.5+ years of B2B SaaS sales experience, I know wha...",
+"role_type": "bdr"
+},
+{
+"co": "Cisco",
+"title": "Sales Development Representative",
+"score": 95,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of enterprise cybersecurity and SaaS sales experience make him an exceptional fit to drive pipeline at Cisco.",
+"note": "Hey [Name], saw the Cisco SDR opening. I've scaled cyber pipeline by $1.2M+ at Cyberbit & FortifyData. Would love to connect!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-%28saas%29-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Cisco’s leadership in enterprise SaaS and security, and I noticed your team is scaling the SDR organization. With over 3.5 years of B2B SaaS and cybersecurity sales ...",
+"role_type": "sdr"
+},
+{
+"co": "New Relic",
+"title": "Business Development Representative (Outbound)",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of outbound B2B SaaS experience, quota-crushing track record, and Atlanta location make him an ideal fit for New Relic's BDR role.",
+"note": "Hey [Name], saw you're scaling New Relic's outbound team in Atlanta. As a former D1 athlete who scaled pipeline by $1.2M+ at Cyberbit, I'd love to ...",
+"url": "http://job-boards.greenhouse.io/newrelic/jobs/5287663008",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following New Relic’s growth in the observability space and noticed your team is scaling outbound operations in Atlanta. With over 3.5 years of B2B SaaS sales experience, I re...",
+"role_type": "bdr"
+},
+{
+"co": "Guidepoint Security",
+"title": "Careers in Cybersecurity",
+"score": 92,
+"source": "oxylabs",
+"why": "It's an ideal match leveraging Joseph's 3.5+ years of B2B cybersecurity SaaS sales experience and proven outbound pipeline generation skills.",
+"note": "Hey! Saw your AppSec roles. I've scaled cyber pipeline by $1.2M+ and hit 110%+ quota in SaaS. Would love to connect about your growth!",
+"url": "https://job-boards.greenhouse.io/guidepointsecurity/jobs/6114140004",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Cybersecurity",
+"tech_stack": "AI-augmented Application Security Services",
+"outreach_email": "Hi Team,\n\nI’ve been following Guidepoint Security and am impressed by your innovative approach to AI-augmented Application Security Services. With over 3.5 years of dedicated B2B cybersecurity SaaS...",
+"role_type": "other"
+},
+{
+"co": "FlowFuse",
+"title": "Founding SDR",
+"score": 92,
+"source": "oxylabs",
+"why": "FlowFuse needs its first early-stage SDR to shape outbound, matching Joseph's track record of driving pipeline, exceeding quota, and mentoring reps.",
+"note": "Hey [Name], saw FlowFuse is hiring its first SDR. As a senior BDR who's built outbound motions & hit 110%+ quota, I'd love to help scale your pipel...",
+"url": "https://job-boards.greenhouse.io/flowfuse/jobs/6013937004",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI saw FlowFuse is hiring its very first SDR to shape inbound and outbound sales development. With 3.5+ years of B2B SaaS experience scaling outbound pipelines, consistently exceeding qu...",
+"role_type": "sdr"
+},
+{
+"co": "Baseten",
+"title": "Sales Development Representative - Outbound",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's proven outbound B2B SaaS experience, quota-crushing track record, and competitive D1 athlete mindset make him an ideal fit for an aggressive outbound SDR role at a high-growth tech company.",
+"note": "Hey [Name], saw Baseten's scaling outbound. I've booked $1.2M+ in SaaS pipeline & hit 110%+ quota. Would love to bring that D1 drive to your team!",
+"url": "https://jobs.ashbyhq.com/baseten/fdbbf773-0857-4771-8b90-f3dfa1d8683f",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Baseten's growth in the AI/ML infrastructure space and love how you're scaling outbound motions.\n\nWith 3.5+ years of B2B SaaS experience, I specialize in cold outbou...",
+"role_type": "sdr"
+},
+{
+"co": "Ajax",
+"title": "Founding Sales Development Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's track record of exceeding quota by 110%+ in fast-paced startup environments like FortifyData makes him an ideal candidate to build outbound foundations as a founding SDR.",
+"note": "Hey! Loved seeing the Founding SDR role at Ajax. As a former D1 athlete used to building from scratch, I'd love to help scale your outbound engine....",
+"url": "https://jobs.ashbyhq.com/Ajax/898acb43-d19a-4170-bf93-981cebe89e47",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Ajax and am very impressed by the mission around AI Timekeeping and the steep growth curve of the team.\n\nWith 3.5+ years of B2B SaaS sales experience, I consistently e...",
+"role_type": "sdr"
+},
+{
+"co": "30mpc",
+"title": "Founding Sales Development Representative (SDR)",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph excels in early-stage ambiguity, having built outbound processes, hit 110%+ quota, and mentored reps at FortifyData.",
+"note": "Saw you're building out the founding SDR team in NYC. As a former D1 athlete who scaled pipeline by $1.2M+, I thrive in that ambiguity. Let's connect!",
+"url": "https://jobs.ashbyhq.com/30mpc/6f30c993-b6cd-4a34-b774-34a566c81f38",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following 30mpc and noticed you’re scaling out your founding SDR team in NYC. As an early-stage builder who thrives in ambiguity, that caught my eye.\n\nWith 3.5+ years in B2B S...",
+"role_type": "sdr"
+},
+{
+"co": "Rubie",
+"title": "Sales Development Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's founding SDR and scaling experience at FortifyData maps directly to helping an early-stage startup drive hyper-growth.",
+"note": "Hey [Name], saw you're scaling Rubie as a Founding SDR. I've scaled pipeline 110%+ at early-stage SaaS startups. Let's connect!",
+"url": "https://jobs.ashbyhq.com/rubie/a533b2dd-6a0d-4087-9d1e-0333e544519e",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Rubie's growth as an early-stage disruptor and wanted to connect. With 3.5+ years of B2B SaaS sales experience, I recently drove $1.2M+ in pipeline at Cyberbit and c...",
+"role_type": "sdr"
+},
+{
+"co": "Hubstaff",
+"title": "Sales Development Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "Hubstaff's early-stage sales team needs an autonomous, proven producer who can scale processes, mirroring Joseph's senior BDR and mentoring background.",
+"note": "Building Hubstaff's first sales team takes grit. As a former D1 athlete & Sr BDR who scaled pipeline 110%+, I'd love to help drive your outbound en...",
+"url": "https://ie.linkedin.com/jobs/view/sales-development-representative-remote-at-hubstaff-2584322877?refId=Xlu%2Fqsk7cxYkLpjH16%2F0hA%3D%3D&trackingId=jdPNV2YfavxWInCJ7XZ%2Fng%3D%3D&position=9&pageNum=0&trk=public_jobs_jserp-result_search-card",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Small (50-200)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI noticed Hubstaff is building out its very first sales team, which is an exciting growth phase. Having served as a Senior BDR where I consistently hit 110%+ of quota, helped build out pr...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified Cybersecurity Agency",
+"title": "Account Executive - Cybersecurity",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B cybersecurity SaaS experience, proven pipeline generation, and consistent 110%+ quota achievement make him a prime candidate to step into an AE role.",
+"note": "Hey [Name], saw your Cyber AE opening. I've scaled cybersecurity SaaS pipeline by $1.2M+ and hit 110%+ quota. Would love to bring that drive to you!",
+"url": "https://www.linkedin.com/jobs/account-executive-cyber-security-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Cybersecurity",
+"tech_stack": "Salesforce, Salesloft, Outreach, Gong",
+"outreach_email": "Hi [Name],\n\nI noticed your open Account Executive role in cybersecurity and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—including generating $1.2M...",
+"role_type": "ae"
+},
+{
+"co": "Clera",
+"title": "Founding BDR (SDR-to-AE Track)",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's track record of scaling pipeline at high-growth startups and leadership experience makes him an ideal founding BDR.",
+"note": "Loved seeing Clera's early growth. As a former D1 athlete & Sr BDR who scaled $1.2M+ in pipeline, I'd love to help build your outbound engine.",
+"url": "https://www.linkedin.com/jobs/view/founding-bdr-sdr-to-ae-track-at-clera-4454500161",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Clera's growth and was excited to see your Founding BDR opening. \n\nAs a former NCAA D1 athlete, I treat sales like a team sport. In my recent roles at Cyberbit and Fo...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Full-Cycle Sales Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "It's a natural career progression from Joseph's 3.5+ years of top-performing BDR/SDR experience into a full-cycle closing role.",
+"note": "Saw your post on owning the full sales cycle. Coming off 110%+ quota achievements in B2B SaaS, I'm ready to drive revenue. Let's connect!",
+"url": "https://ie.linkedin.com/jobs/view/coming-from-an-early-stage-sales-role%3F-own-the-full-sales-cycle-and-your-career-growth-at-coming-from-an-early-stage-sales-role%3F-it%E2%80%99s-time-to-own-the-full-sales-cycle-and-your-career-growth-4317338967",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following your team's growth and noticed you're looking for driven talent ready to step up and own the full sales cycle. With over 3.5 years of top-performing B2B SaaS and cyb...",
+"role_type": "sdr"
+},
+{
+"co": "FinQuery",
+"title": "Sales Development Representative (SDR)",
+"score": 92,
+"source": "oxylabs",
+"why": "It's an Atlanta-based SaaS SDR role that leverages Joseph's 3.5+ years of B2B prospecting, pipeline generation, and enterprise sales experience.",
+"note": "Hey [Name], saw FinQuery is scaling the Atlanta SDR team. I've scaled $1.2M+ in SaaS pipeline and hit 110%+ quota. Let's connect!",
+"url": "https://www.indeed.com/q-saas-sdr-l-atlanta,-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following FinQuery’s growth in Atlanta and noticed you're scaling the SaaS SDR team. \n\nWith over 3.5 years of B2B tech sales experience—including generating $1.2M+ in pipeline...",
+"role_type": "sdr"
+},
+{
+"co": "FurtherAI",
+"title": "Sales Development Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph's track record as a senior BDR and high-performing outbound engine makes him an ideal founding SDR for a fast-growing YC startup.",
+"note": "Hey! Loved seeing FurtherAI's YC momentum. As an ex-D1 athlete & Sr BDR who scaled pipeline by $1.2M+, I'd love to help build your outbound engine.",
+"url": "https://www.workatastartup.com/jobs/70897",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following FurtherAI’s growth through Y Combinator and am impressed by what you’re building.\n\nWith 3.5+ years scaling outbound pipeline in high-growth tech—including driving $1.2...",
+"role_type": "sdr"
+},
+{
+"co": "Raindrop",
+"title": "Sales Development Representative",
+"score": 92,
+"source": "oxylabs",
+"why": "Joseph excels at building outbound engines from the ground up, scaling pipeline, and crushing targets at early-stage tech companies.",
+"note": "Hey! Saw Raindrop is building out outbound. I scaled pipeline by $1.2M+ at Cyberbit & hit 110%+ at FortifyData. Would love to connect!",
+"url": "https://www.workatastartup.com/jobs/103341",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI noticed Raindrop is scaling up its outbound pipeline engine from the ground up. As a former D1 athlete turned senior BDR with 3.5+ years in B2B SaaS, I thrive in early-stage environment...",
+"role_type": "sdr"
+},
+{
+"co": "Decagon",
+"title": "Sales Development Representative (SDR)",
+"score": 90,
+"source": "oxylabs",
+"why": "Joseph's proven track record of exceeding quota (110%+) and scaling outbound pipeline in fast-paced SaaS environments makes him an ideal fit for an elite startup SDR role.",
+"note": "Loved seeing Decagon's growth. As an ex-D1 athlete & Sr BDR who scaled pipeline 110%+, I'd love to bring that same competitive drive to your SDR team.",
+"url": "https://jobs.ashbyhq.com/decagon/5bf50bc3-f676-4edc-90d2-bc8154d7ee84",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "$88K – $110K",
+"company_size": "Company size not specified",
+"industry": "AI/ML / SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Decagon’s momentum and am very impressed by what you’re building.\n\nWith 3.5+ years of B2B SaaS sales experience, I consistently exceeded quota by 110%+ at FortifyData ...",
+"role_type": "sdr"
+},
+{
+"co": "Origin",
+"title": "Sales / Business Development Representative (SDR / BDR)",
+"score": 90,
+"source": "oxylabs",
+"why": "This SDR/BDR role directly matches Joseph's 3.5+ years of B2B SaaS pipeline generation experience and track record of exceeding quota by 110%+.",
+"note": "Hey [Name], I've scaled B2B SaaS pipelines at Cyberbit & FortifyData, exceeding quota 110%+. Would love to bring that drive to Origin!",
+"url": "https://jobs.ashbyhq.com/originhq/95f65030-9623-4c12-9bc1-35a19965a800?utm_source=WvgxLKmlGl",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Origin’s growth and wanted to connect. With 3.5+ years of B2B SaaS experience scaling pipelines at Cyberbit and FortifyData—consistently exceeding quota by 110%+—I k...",
+"role_type": "sdr"
+},
+{
+"co": "Process Street",
+"title": "Account Executive",
+"score": 88,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience and track record of exceeding quota prepare him well to step into a full-cycle closing role.",
+"note": "Hey! Saw Process Street's AE opening. I've spent 3.5+ years scaling B2B SaaS pipeline & exceeding quotas. Would love to chat about the closing team!",
+"url": "http://job-boards.greenhouse.io/processstreet/jobs/8530554002",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Small (50-200)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Process Street and love how you're helping teams streamline workflows. With 3.5+ years of B2B SaaS experience, I’m looking to step into a closing Account Executive r...",
+"role_type": "ae"
+},
+{
+"co": "Temporal",
+"title": "Business Development Representative",
+"score": 88,
+"source": "oxylabs",
+"why": "Temporal matches Joseph's enterprise SaaS BDR background and is located in his target market of Atlanta, GA.",
+"note": "Hey [Name], saw Temporal's growing in ATL! Exceeded quota 110%+ at Cyberbit & FortifyData. Would love to bring that drive to your BDR team.",
+"url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5102909007",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI noticed Temporal is scaling its team in Atlanta and driving heavy growth. With 3.5+ years of B2B SaaS sales experience, I’ve consistently exceeded quota at 110%+ while managing comple...",
+"role_type": "bdr"
+},
+{
+"co": "ConnectWise",
+"title": "B2B SaaS Sales Development Representative",
+"score": 88,
+"source": "oxylabs",
+"why": "ConnectWise is a major enterprise tech company where Joseph's 3.5+ years of B2B SaaS and cybersecurity sales experience and enterprise prospecting skills will seamlessly drive pipeline.",
+"note": "Hey [Name], saw your open SDR role. I've scaled B2B SaaS pipelines at Cyberbit & FortifyData, hitting 110%+ quota. Let's connect!",
+"url": "http://job-boards.greenhouse.io/connectwise/jobs/4340100005",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following ConnectWise’s leadership in the B2B software space and noticed your opening for an SDR. \n\nWith 3.5+ years of B2B SaaS and cybersecurity sales experience across Cyber...",
+"role_type": "sdr"
+},
+{
+"co": "Ramp",
+"title": "Sales Development Representative | Inbound",
+"score": 88,
+"source": "oxylabs",
+"why": "Joseph's high-volume execution, D1 grit, and 110%+ quota attainment make him an elite fit to scale Ramp's fast-moving inbound pipeline.",
+"note": "Loved seeing Ramp scale. As a former D1 athlete who scaled pipeline 110%+ at Cyberbit, I’d love to bring that same high-motor drive to your inbound...",
+"url": "https://jobs.ashbyhq.com/ramp/f98771d6-e685-4b91-a466-71789c238e33",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Ramp’s hyper-growth and was immediately drawn to your inbound SDR opening. As a former D1 athlete at Georgia Southern and a senior sales professional with 3.5+ years o...",
+"role_type": "sdr"
+},
+{
+"co": "Aibidia",
+"title": "Enterprise Sales Development Representative - US",
+"score": 88,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience, enterprise prospecting, and founding/senior SDR background make him an ideal fit for an early enterprise SDR hire.",
+"note": "Loved seeing Aibidia scale its US team. As a former D1 athlete and Sr. BDR who scaled pipeline 110%+, I'd love to connect on driving early growth.",
+"url": "https://jobs.ashbyhq.com/aibidia/8cba0bc9-accd-4dc4-97b6-82670f1781bf?embed=js",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Aibidia’s US expansion and love seeing your momentum as an early enterprise team. \n\nAs a Senior BDR with 3.5+ years of B2B SaaS experience, I’ve consistently exceede...",
+"role_type": "sdr"
+},
+{
+"co": "Laurel",
+"title": "Enterprise Business Development Representative",
+"score": 88,
+"source": "oxylabs",
+"why": "Laurel's heavy investment in BDR enablement, coaching, and career growth aligns perfectly with Joseph's promoter-to-senior trajectory, athletic coachability, and peer-mentoring background.",
+"note": "Hey [Name], saw Laurel's BDR team is a core talent pipeline. As a former D1 athlete & Sr BDR who scaled pipeline 110%+, I'd love to bring that grit...",
+"url": "https://jobs.ashbyhq.com/laurel/dd7c553b-890f-48a1-92f5-5ccaf4fe61ab",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Laurel’s growth and love how heavily your sales organization invests in BDR enablement and career progression—it immediately caught my eye.\n\nWith 3.5+ years of B2B S...",
+"role_type": "bdr"
+},
+{
+"co": "Shape",
+"title": "Founding Sales Rep (Full-Cycle)",
+"score": 88,
+"source": "oxylabs",
+"why": "Shape is a YC/StartX-backed early-stage startup where Joseph's experience exceeding pipeline quotas by 110%+ and building processes from scratch makes him an ideal founding rep.",
+"note": "Loved seeing Shape's YC backing. As a former D1 athlete who scaled pipeline by $1.2M+ at Cyberbit, I'd love to help build your outbound engine.",
+"url": "https://wellfound.com/company/shape-inc/jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Shape’s growth since seeing your $15M+ raise and Y Combinator background. As a high-performing sales professional with 3.5+ years scaling B2B SaaS and cybersecurity pi...",
+"role_type": "sdr"
+},
+{
+"co": "Instabase",
+"title": "Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS closing and pipeline experience, combined with a strong track record of exceeding quotas, makes him a great fit to step into an AE role at an innovative AI platform.",
+"note": "Hey! Saw your Atlanta AE opening. As a former D1 athlete with 3.5+ yrs exceeding SaaS quotas by 110%+, I'd love to bring that drive to Instabase.",
+"url": "https://job-boards.greenhouse.io/instabase/jobs/8385243002",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Instabase's growth in democratizing access to cutting-edge AI innovation, and I saw your Atlanta Account Executive opening. With over 3.5 years of B2B SaaS sales expe...",
+"role_type": "ae"
+},
+{
+"co": "Supermetrics",
+"title": "Account Executive - Digital Velocity",
+"score": 85,
+"source": "oxylabs",
+"why": "This closing role leverages Joseph's 3.5+ years of B2B SaaS experience and proven track record of overachieving quota by 110%+.",
+"note": "Saw the AE Digital Velocity opening! As a top-performing SaaS sales pro who exceeds quota by 110%+, I'd love to bring my closing drive to Supermetr...",
+"url": "https://job-boards.greenhouse.io/supermetricsoy/jobs/4956308101",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Supermetrics' growth in the digital velocity space and noticed your opening for an Account Executive. With 3.5+ years of B2B SaaS sales experience, I consistently ex...",
+"role_type": "ae"
+},
+{
+"co": "EverDriven",
+"title": "Account Executive, Georgia/Florida",
+"score": 85,
+"source": "oxylabs",
+"why": "This regional AE role fits Joseph's proven B2B closing and outbound pipeline generation experience in the Southeast territory.",
+"note": "Hey! Saw the GA/FL AE role at EverDriven. Exceeded 110% quota at FortifyData & scaled pipeline at Cyberbit. Let's connect on driving growth!",
+"url": "https://job-boards.greenhouse.io/everdriven/jobs/5231015008",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, HubSpot, Salesloft, Outreach",
+"outreach_email": "Hi there,\n\nI noticed EverDriven is scaling its Georgia/Florida territory and wanted to connect directly. As a former D1 athlete turned B2B SaaS sales professional, I bring a competitive edge and di...",
+"role_type": "ae"
+},
+{
+"co": "Eola Power",
+"title": "Sales Account Executive Southeast",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's disciplined B2B SaaS background, local Atlanta presence, and proven outbound execution make him a strong fit to drive regional growth.",
+"note": "Hey! Saw your Atlanta AE opening. As a local B2B SaaS sales vet with 110%+ quota attainment and a D1 background, I’d love to connect.",
+"url": "https://job-boards.greenhouse.io/eolapower/jobs/5124790008",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there, \n\nI noticed Eola Power is scaling its presence in the Atlanta market and currently looking for a Sales Account Executive. Given my 3.5+ years of high-performing B2B SaaS sales experience ...",
+"role_type": "ae"
+},
+{
+"co": "Array",
+"title": "Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's track record of exceeding sales quotas and managing complex B2B sales cycles makes him a strong fit for an AE role at a fast-growing tech company.",
+"note": "Hey [Name], saw Array's growth! As a D1 athlete who scales revenue 110%+, I'd love to bring that execution to your AE team. Open to a chat?",
+"url": "http://job-boards.greenhouse.io/array/jobs/4805410004",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Array’s momentum in the financial tech space and am impressed by your remote-first growth.\n\nWith over 3.5 years of high-performing B2B sales experience—including con...",
+"role_type": "ae"
+},
+{
+"co": "Minitab",
+"title": "Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS sales experience, consistent 110%+ quota attainment, and enterprise pipeline generation make him a strong candidate to step up into an AE role.",
+"note": "Loved seeing Minitab's AE opening. I've spent 3.5+ years driving SaaS pipeline, hitting 110%+ quota as an NCAA athlete. Let's connect!",
+"url": "http://job-boards.greenhouse.io/minitab/jobs/7753845003",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI noticed Minitab's opening for an Account Executive and wanted to connect directly. With over 3.5 years of B2B SaaS and technical sales experience—consistently exceeding...",
+"role_type": "ae"
+},
+{
+"co": "Piston Technologies",
+"title": "Network - SDR",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience and high-velocity outbound background make him an overqualified, high-impact fit for early-stage sales scaling.",
+"note": "Saw Piston is scaling its sales team. As a former D1 athlete with 3.5+ yrs in B2B SaaS exceeding quota at 110%+, I'd love to connect on pipeline gen.",
+"url": "https://job-boards.greenhouse.io/pistontechnologies/jobs/4265138009",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "Technology",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Piston Technologies and love how you're scaling early-stage sales. As a former D1 athlete and coach's kid, I thrive in high-performance, fast-paced environments.\n\nOv...",
+"role_type": "sdr"
+},
+{
+"co": "Safari",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's expertise in early-stage BDR process building, top-of-funnel pipeline generation, and mentoring aligns with an early-stage startup looking for a high-performing outbound driver.",
+"note": "Saw Safari is scaling its BDR engine. At Cyberbit & FortifyData, I drove $1.2M+ in pipeline and built outbound plays. Let's connect!",
+"url": "http://job-boards.greenhouse.io/safariai/jobs/5077155007",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Safari's growth and saw you are scaling up your top-of-funnel BDR engine. With over 3.5 years of B2B SaaS sales experience, I specialize in building outbound processes...",
+"role_type": "sdr"
+},
+{
+"co": "Lucenia",
+"title": "Director of Sales and Partnerships",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's track record of scaling B2B SaaS pipelines, building GTM playbooks, and mentoring teams aligns directly with Lucenia's need for their first sales leader to drive Series A growth.",
+"note": "Saw you're building Lucenia's GTM engine for Series A! As a Sr BDR who scaled pipeline +$1.2M and built playbooks, I’d love to help drive your growth.",
+"url": "https://job-boards.greenhouse.io/lucenia/jobs/5583545004",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Lucenia's trajectory and saw you're hiring your first Director of Sales and Partnerships to build the GTM engine toward Series A. \n\nWith 3.5+ years scaling B2B SaaS ...",
+"role_type": "other"
+},
+{
+"co": "Automat",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS outbound experience and proven history of exceeding quota by 110%+ make him an ideal fit for a fast-growing tech company.",
+"note": "Hey! Scaled cyber SaaS pipeline to $1.2M+ & hit 110%+ quota. Would love to bring that same D1 athlete drive to Automat's SDR team. Open to a chat?",
+"url": "https://jobs.ashbyhq.com/automat/f1b67be7-60cd-4067-9f33-43c095188d82",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Automat’s rapid growth in the AI space and noticed your team is scaling the SDR organization. With over 3.5 years of B2B SaaS sales experience, I specialize in outbo...",
+"role_type": "sdr"
+},
+{
+"co": "Prosper AI",
+"title": "Business Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's proven track record of scaling pipeline and executing outbound campaigns in B2B tech makes him a strong fit to drive growth at Prosper AI.",
+"note": "Hey [Name], saw Prosper AI is scaling BDRs. At Cyberbit & FortifyData, I booked 110%+ quota and mentored reps. Would love to bring that drive here!",
+"url": "https://jobs.ashbyhq.com/prosper-ai/4e963d3f-8a20-48ea-9a17-4695a3a3f1d7",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML / HealthTech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Prosper AI’s growth across healthcare and medical billing, and I noticed you're scaling your BDR team.\n\nWith 3.5+ years of B2B SaaS experience at Cyberbit and Fortif...",
+"role_type": "bdr"
+},
+{
+"co": "Outset",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph brings 3.5+ years of top-tier SaaS outbound experience and a proven track record of exceeding quota by 110%+.",
+"note": "Hey [Name], saw Outset's hybrid SDR opening. I've scaled SaaS pipelines by $1.2M+ and exceeded quota 110%+ at Cyberbit. Let's connect!",
+"url": "https://jobs.ashbyhq.com/outset/2f27ce92-24e3-4f6c-bf2b-d63c442df1d6",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "$80K – $110K",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope your week is going well. I've been following Outset's growth and noticed your recent opening for a Sales Development Representative.\n\nWith over 3.5 years of B2B SaaS sales experi...",
+"role_type": "sdr"
+},
+{
+"co": "Glimpse",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS outbound experience and proven quota-crushing track record make him an ideal fit for an SDR role.",
+"note": "Hey! Saw Glimpse's NYC SDR opening. I've spent 3.5+ years crushing pipeline quotas in B2B SaaS. Would love to bring that same D1 energy to Glimpse!",
+"url": "https://jobs.ashbyhq.com/glimpse/f834d37e-a51b-4cdb-b0e2-6483066e48b2",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "$75K – $120K",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Team,\n\nI came across the Sales Development Representative opening at Glimpse and wanted to connect directly. With over 3.5 years of high-performing B2B SaaS and cybersecurity sales experience, I...",
+"role_type": "sdr"
+},
+{
+"co": "Notion",
+"title": "Business Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph brings 3.5+ years of high-performing B2B SaaS sales experience, a track record of exceeding quota by 110%+, and enterprise outbound expertise that aligns well with Notion's fast-paced sales team.",
+"note": "Hey [Name], saw you're scaling Notion's BDR team. I've spent 3.5+ years crushing SaaS outbound (110%+ quota). Would love to chat!",
+"url": "https://jobs.ashbyhq.com/notion/05e14247-17c4-4e98-9a13-53828a4e2f13",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Notion's rapid growth and love how your platform is transforming team collaboration and productivity.\n\nI’m reaching out because I bring 3.5+ years of B2B SaaS sales ...",
+"role_type": "bdr"
+},
+{
+"co": "Metaview",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS outbound experience and promotion-track record align seamlessly with scaling a Go-To-Market team.",
+"note": "Loved seeing Metaview's GTM growth! As a senior BDR scaling pipeline 110%+ in SaaS, I'd love to bring that relentless execution to your team.",
+"url": "https://jobs.ashbyhq.com/metaview/c3908995-4a23-4130-9c17-1f96c385dbad",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "$100k OTE (Inferred/Partial)",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Metaview’s momentum and am really impressed by how you're transforming the interview process for high-growth teams.\n\nWith 3.5+ years of B2B SaaS sales experience, I c...",
+"role_type": "sdr"
+},
+{
+"co": "Runway",
+"title": "Manager / Director, Sales Development",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's track record of building outbound systems, mentoring reps at FortifyData, and scaling pipeline fits an AI-first sales leadership role.",
+"note": "Loved seeing Runway scale AI-first sales! As a Sr BDR who builds playbooks & hits 110% quota, I'd love to chat about your outbound systems.",
+"url": "https://jobs.ashbyhq.com/runway-ml/44c1578a-3b0c-4b64-b1c0-89f51e8635ee",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Runway’s trajectory and how you're redefining AI-first sales development. Building modern prospecting systems is an area I'm deeply passionate about.\n\nAt Cyberbit an...",
+"role_type": "sdr"
+},
+{
+"co": "Retell AI",
+"title": "Sales Development Representative (Inbound)",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's high-velocity B2B SaaS background and enterprise discovery skills make him an ideal fit to handle high-intent inbound pipeline for a fast-growing AI voice startup.",
+"note": "Loved Retell's AI voice agents! Exceeded quota 110%+ at Cyberbit & FortifyData, ready to drive inbound pipeline for you. Let's connect!",
+"url": "https://jobs.ashbyhq.com/retell-ai/37429bf6-1b7f-477d-9b1d-f291e73ca2cb",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Retell AI and love how your AI voice agents are transforming sales and support workflows. \n\nWith 3.5+ years of high-performing B2B SaaS sales experience, I consisten...",
+"role_type": "sdr"
+},
+{
+"co": "Strala",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Strala's high-performance AI sales environment directly aligns with Joseph's top-tier outbound B2B SaaS prospecting and execution skills.",
+"note": "Loved Strala's AI trajectory! I've scaled SaaS pipelines to $1.2M+ and consistently exceed quota. Let's connect on building your outbound engine.",
+"url": "https://jobs.ashbyhq.com/strala-ai/72d80516-55d8-477e-b67b-46d9285ec297",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Team,\n\nI've been following Strala's growth in the AI space and was immediately drawn to your high-performance culture. As a senior-promoted B2B SaaS sales professional with 3.5+ years of experie...",
+"role_type": "sdr"
+},
+{
+"co": "Harvey",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's strong enterprise outbound prospecting and SaaS background aligns well with driving growth for Harvey's emerging AI solutions.",
+"note": "Hey! Huge fan of Harvey's legal AI growth. As a Sr BDR who has scaled cybersecurity pipelines, I'd love to bring my outbound hustle here. Open to c...",
+"url": "https://jobs.ashbyhq.com/harvey/a009e4a8-518e-4d92-a0f4-92f2e2dcee7a",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Harvey’s rapid ascent in the legal AI space and am really impressed by how you're transforming workflows for legal teams. \n\nI’m Joseph Goydish II, an SDR with 3.5+ y...",
+"role_type": "sdr"
+},
+{
+"co": "Harper",
+"title": "Sales Development Representative, AI-Native",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS outbound experience and track record of exceeding quota by 110%+ make him an ideal fit for scaling an AI-native startup.",
+"note": "Hey! Saw Harper is rebuilding commercial insurance. I've scaled pipeline 110%+ at Cyberbit & FortifyData—would love to chat SDR strategy!",
+"url": "https://jobs.ashbyhq.com/harperinsure/2030a0d3-596f-46d7-a436-83a94f12cdaf",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Harper’s mission to rebuild commercial insurance from the ground up with AI, and I’m impressed by the growth.\n\nWith 3.5+ years of B2B SaaS sales experience, I consiste...",
+"role_type": "sdr"
+},
+{
+"co": "Tremendous",
+"title": "Founding Sales Development Representative (Europe)",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's track record of building pipeline from scratch and operating as a senior outbound driver aligns perfectly with a founding go-to-market motion.",
+"note": "Saw you're scaling Tremendous in Europe. I scaled pipeline 110%+ at Cyberbit & FortifyData as an early rep. Open to chatting?",
+"url": "https://jobs.ashbyhq.com/Tremendous/b906ae41-7bb2-432d-af52-f4237f9f5524?embed=js",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Tremendous' international expansion and wanted to connect regarding the Founding European SDR role.\n\nWith 3.5+ years of B2B SaaS sales experience, I specialize in buil...",
+"role_type": "sdr"
+},
+{
+"co": "Dandy",
+"title": "Founding Business Development Representative (BDR) – SP",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's high-growth startup experience and 'founding' mentality at FortifyData make him an ideal fit to build out early-stage sales outbound motions.",
+"note": "Loved seeing Dandy's growth as a Founding BDR. As a former D1 athlete who scaled pipeline by $1.2M+, I'd love to help drive your outbound engine.",
+"url": "https://jobs.ashbyhq.com/dandy/aa22ae9f-6cbd-4040-95f4-e16220c5f939",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [First Name],\n\nI’ve been following Dandy’s rapid growth and noticed you're scaling out the outbound sales engine. As a former D1 athlete and B2B SaaS sales professional with 3.5+ years of experi...",
+"role_type": "bdr"
+},
+{
+"co": "Numeric",
+"title": "Business Development Representative (BDR) - NY",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing BDR/SaaS experience, quota-exceeding track record, and competitive D1 background make him an ideal fit for a fast-growing tech sales team.",
+"note": "Loved your growth at Numeric! As a former D1 athlete & Sr BDR who scaled pipeline 110%+, I'd love to bring that same competitive drive to your team.",
+"url": "https://jobs.ashbyhq.com/numeric/630b02e5-72b2-4c41-8eb1-a3b696fc1076",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Numeric’s rapid growth and love your energy around scaling the sales team. As a former D1 athlete from Georgia Southern and a Senior BDR with 3.5+ years of B2B SaaS ex...",
+"role_type": "bdr"
+},
+{
+"co": "AdvizorPro",
+"title": "Business Development Representative (BDR)",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph brings 3.5+ years of high-performing B2B SaaS and cyber sales experience, perfectly aligning with scaling BDR motions.",
+"note": "Hey [Name], saw AdvizorPro is growing its BDR team. I've added $1.2M+ in pipeline at Cyberbit and FortifyData. Let's connect!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-jobs-atlanta-metropolitan-area",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I’ve been following AdvizorPro's growth in Atlanta and wanted to connect directly.\n\nWith 3.5+ years of B2B SaaS sales experience—including generating ...",
+"role_type": "sdr"
+},
+{
+"co": "Novra Corp",
+"title": "Lead Generation Specialist",
+"score": 85,
+"source": "oxylabs",
+"why": "This remote lead generation role leverages Joseph's proven outbound prospecting expertise and consistent track record of exceeding B2B pipeline quotas.",
+"note": "Hey [Name], saw your Lead Gen role at Novra. I've scaled pipeline by $1.2M+ and hit 110%+ quota in cyber SaaS. Would love to bring that drive to yo...",
+"url": "https://www.linkedin.com/jobs/view/lead-generation-specialist-at-novra-corp-4452874205",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI came across the Lead Generation Specialist opening at Novra Corp and wanted to connect directly. With 3.5+ years of B2B SaaS and cybersecurity sales experience—including scaling pipel...",
+"role_type": "other"
+},
+{
+"co": "LinkedIn",
+"title": "Business Development / Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "This is a LinkedIn search aggregator page for remote BD and sales roles in Atlanta, directly aligning with Joseph's local presence and enterprise prospecting experience.",
+"note": "Saw the Atlanta remote BD roles. As a senior cybersecurity SaaS BDR hitting 110%+ quota, I’d love to connect and discuss scaling pipeline for you.",
+"url": "https://www.linkedin.com/jobs/remote-business-development-jobs-atlanta-metropolitan-area",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Salesforce, Salesloft, Outreach, LinkedIn Sales Navigator",
+"outreach_email": "Hi Hiring Team,\n\nI noticed the open remote Business Development and sales roles in the Atlanta area and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experienc...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Sales Development Representative (SDR)",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph is based in Atlanta and brings 3.5+ years of B2B SaaS experience, making him an ideal candidate for this high-volume Atlanta-based SDR expansion.",
+"note": "Saw you're scaling the Atlanta SDR team. As a former D1 athlete & Sr. BDR who crushes 110%+ quota, I’d love to bring that drive to your team!",
+"url": "https://www.linkedin.com/posts/joe-ferrero_we-are-hiring-9-sales-development-representatives-activity-7397702753973854208-LSKG",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Joe,\n\nI saw your post about scaling the SDR team in Atlanta and wanted to connect directly. With 3.5+ years of B2B SaaS and cybersecurity sales experience—including consistently hitting 110%+ of...",
+"role_type": "sdr"
+},
+{
+"co": "Tessera Data",
+"title": "Enterprise Business Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of enterprise B2B SaaS experience and track record of exceeding quota by 110%+ make him an ideal fit for an Enterprise BDR role.",
+"note": "Saw Tessera Data's Enterprise BDR opening. I've scaled enterprise pipeline by $1.2M+ at 110%+ quota. Would love to bring that drive to your team!",
+"url": "https://www.linkedin.com/jobs/bdr-remote-jobs-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, Salesloft, LinkedIn Sales Navigator",
+"outreach_email": "Hi there,\n\nI came across Tessera Data's Enterprise Business Development Representative opening and wanted to connect directly. With over 3.5 years of experience in B2B SaaS sales, I have a proven t...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Sales Development Representative / Business Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS/cyber experience, quota outperformance, and outbound expertise match Atlanta-based BDR roles seamlessly.",
+"note": "Loved your Atlanta BDR opening. I’ve driven $1.2M+ in pipeline at Cyberbit and regularly hit 110%+ quota. Let's connect!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-inbound-atlanta-jobs-atlanta-ga?trk=guest_job_details_jd_jserp_more_jobs_link",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, LinkedIn Sales Navigator, Salesloft",
+"outreach_email": "Hi [Name],\n\nI noticed your recent opening for a Sales Development Representative in Atlanta and wanted to connect directly.\n\nWith over 3.5 years of B2B SaaS and cybersecurity sales experience at co...",
+"role_type": "sdr"
+},
+{
+"co": "Milliman MedInsight",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's proven B2B SaaS background and enterprise prospecting skills align well with scaling sales development efforts in healthcare analytics.",
+"note": "Hey! Ex-Georgia Southern D1 athlete & Cyberbit BDR here. I've generated $1.2M+ in pipeline hitting 110%+ quotas. Let's connect on pipeline growth!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-remote-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "HealthTech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Team,\n\nI came across the SDR opening at Milliman MedInsight and wanted to connect directly. With 3.5+ years of B2B SaaS experience scaling outbound pipeline—including generating $1.2M+ in qualif...",
+"role_type": "sdr"
+},
+{
+"co": "CoverGo",
+"title": "Business Development Representative - US Market",
+"score": 85,
+"source": "oxylabs",
+"why": "CoverGo's high-growth US market expansion heavily benefits from Joseph's proven SaaS outbound execution and enterprise pipeline generation.",
+"note": "Hey! Loved CoverGo's US growth. I've scaled $1.2M+ in SaaS pipeline and hit 110%+ quota consistently. Would love to bring that drive to your team!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-inbound-jobs-atlanta-ga",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Insurtech / SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following CoverGo’s expansion into the US market and am impressed by your scalable insurance platform.\n\nWith over 3.5 years of B2B SaaS experience, I specialize in outbound pro...",
+"role_type": "sdr"
+},
+{
+"co": "LinkedIn Job Board (Aggregator)",
+"title": "SMB / Mid-Market Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years in B2B cybersecurity SaaS, consistent 110%+ quota achievement, and senior BDR promotion make him a prime candidate for scaling into Closing roles across Atlanta's tech ecosystem.",
+"note": "Hey! Saw the Atlanta SaaS sales openings. As a former D1 athlete & Cyberbit senior sales rep exceeding quota by 110%+, I'd love to connect on closi...",
+"url": "https://www.linkedin.com/jobs/saas-sales-jobs-atlanta-ga",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, Salesloft, HubSpot, LinkedIn Sales Navigator",
+"outreach_email": "Hi there,\n\nI noticed the massive pool of SaaS sales openings in the Atlanta market and wanted to connect directly. With over 3.5 years of high-performing B2B cybersecurity SaaS sales experience at ...",
+"role_type": "ae"
+},
+{
+"co": "Banyan Software",
+"title": "Senior Account Executive",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience and track record of exceeding quotas position him well for a senior software sales role.",
+"note": "Hey, saw the Sr AE role at Banyan. As a former D1 athlete who scales SaaS pipeline 110%+, I'd love to bring that drive to your team. Open to chat?",
+"url": "https://www.linkedin.com/jobs/remote-software-sales-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Senior Account Executive opening at Banyan Software and wanted to connect directly. With over 3.5 years of high-performing B2B SaaS and cybersecurity sales experience—c...",
+"role_type": "ae"
+},
+{
+"co": "Huzzle",
+"title": "Sales Development Representative - SaaS",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS sales and relentless outbound execution make him an ideal fit to scale Huzzle's remote pipeline.",
+"note": "Loved Huzzle's mission! I've spent 3.5+ years crushing B2B SaaS outbound at Cyberbit/FortifyData (110%+ quota). Would love to bring that drive here.",
+"url": "https://www.linkedin.com/jobs/view/sales-development-representative-saas-remote-at-huzzle-com-4288306936",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Small (50-200)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI've been following Huzzle's growth and love how you're transforming the career platform space. With 3.5+ years of B2B SaaS sales experience, I specialize in building high-performing outb...",
+"role_type": "sdr"
+},
+{
+"co": "Plaid",
+"title": "Business Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS outbound experience and quota-exceeding track record map directly to fintech scaling goals at Plaid.",
+"note": "Hey [Name], saw Plaid's BDR opening. As a D1 athlete & former Sr. BDR who scaled pipeline 110%+, I'd love to connect on driving outbound growth.",
+"url": "https://www.linkedin.com/jobs/business-development-representative-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I’ve been following Plaid’s momentum in the fintech space and noticed your team is expanding its Business Development organization.\n\nWith over 3.5 yea...",
+"role_type": "bdr"
+},
+{
+"co": "Three Pillars Recruiting (Client: Shopify of AI for eCommerce)",
+"title": "Enterprise SDR",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of enterprise B2B SaaS pipeline generation and high-output discipline make him an ideal fit for an early-stage high-growth AI startup.",
+"note": "Loved seeing your $7M ARR milestone. As a Sr. BDR who scales pipeline 110%+, I’d love to bring that same high-output energy to your team.",
+"url": "https://www.linkedin.com/jobs/view/enterprise-sdr-shopify-of-ai-for-ecommerce-%246-5mm-seed-funding-%247mm-arr-in-5-years-at-three-pillars-recruiting-4439862605",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following the rapid growth of your AI eCommerce platform, especially hitting $7M ARR out of the gate. Building hyper-growth pipeline is in my DNA.\n\nWith 3.5+ years of enterpri...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS/cybersecurity BDR experience and track record of exceeding quota by 110%+ make him an ideal fit for this Atlanta-based SDR role.",
+"note": "Saw your Atlanta SDR opening. I've scaled cybersecurity pipelines by $1.2M+ and hit 110%+ quota. Would love to chat about driving growth for you!",
+"url": "https://www.indeed.com/m/jobs?q=BDR&l=Atlanta%2C+GA",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "$83,000 - $88,000 a year",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Outreach",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI came across your Sales Development Representative opening in Atlanta and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—...",
+"role_type": "sdr"
+},
+{
+"co": "Various Tech Companies in Atlanta",
+"title": "Business Development Representative / Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "This is a targeted Atlanta tech search matching Joseph's local preference, SaaS BDR background, and enterprise pipeline generation skills.",
+"note": "Saw Atlanta tech BDR openings. I scaled cybersecurity pipeline by $1.2M+ at Cyberbit & hit 110%+ quota. Would love to bring that drive to your team!",
+"url": "https://www.indeed.com/q-bdr-tech-l-atlanta,-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, Salesloft, Outreach, HubSpot",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI noticed you are actively scaling your sales team in Atlanta and wanted to connect directly.\n\nAs a former NCAA D1 athlete and coach's kid, I bring a relentless work ethi...",
+"role_type": "sdr"
+},
+{
+"co": "Various Georgia Tech/SaaS Employers",
+"title": "Sales Development Representative / Senior BDR",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS cybersecurity sales and D1 athlete grit make him an ideal candidate for high-growth tech sales roles in Georgia.",
+"note": "Loved seeing your GA sales opening. As a D1 athlete & Sr. BDR who scaled pipeline 110%+, I'd love to bring that drive to your team. Open to chat?",
+"url": "https://www.indeed.com/q-sales-development-representative-l-georgia-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS / Technology",
+"tech_stack": "Salesforce, Salesloft, Outreach, LinkedIn Sales Navigator",
+"outreach_email": "Hi [Name],\n\nI came across your sales opening in Georgia and immediately thought of my background scaling outbound pipelines in B2B SaaS and cybersecurity. \n\nAs a former NCAA D1 athlete from Georgia...",
+"role_type": "sdr"
+},
+{
+"co": "Various Companies (Indeed Search)",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS/cybersecurity outbound experience, 110%+ quota attainment, and senior leadership background make him an ideal candidate for top-tier Atlanta tech SDR roles.",
+"note": "Hey [Name], saw your open SDR role in Atlanta. I've scaled cybersecurity pipeline by $1.2M+ and hit 110%+ quota. Would love to connect on driving g...",
+"url": "https://www.indeed.com/q-Sales-Development-Representative-l-Atlanta-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Salesforce, Salesloft, Outreach, LinkedIn Sales Navigator",
+"outreach_email": "Hi [Name],\n\nI came across your open Sales Development Representative role in Atlanta and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—including gen...",
+"role_type": "sdr"
+},
+{
+"co": "Y Combinator",
+"title": "Sales Manager / B2B SaaS Sales",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B cybersecurity SaaS experience and track record of exceeding quota by 110%+ make him an ideal fit for high-growth YC-backed startup sales roles.",
+"note": "Hey! Scaled cyber SaaS pipelines to $1.2M+ & hit 110%+ quota. Would love to bring that D1 athlete grit to the YC ecosystem. Open to chat?",
+"url": "https://wellfound.com/company/y-combinator",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "Startup Accelerator / Tech",
+"tech_stack": "Salesforce, HubSpot, Salesloft, Outreach",
+"outreach_email": "Hi there,\n\nI’ve been following Y Combinator’s portfolio and the incredible velocity of your startups. With 3.5+ years of B2B SaaS and cybersecurity sales experience—including generating $1.2M+ in p...",
+"role_type": "other"
+},
+{
+"co": "Unspecified (Y Combinator Startup)",
+"title": "Outbound SDR / BDR",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS outbound experience and YC-adjacent high-growth mentality make him a strong fit to scale an early-stage AI startup's pipeline.",
+"note": "Loved seeing your YC backing. As a Sr BDR exceeding 110% quota in SaaS, I'd love to help scale your outbound engine. Open to a quick chat?",
+"url": "https://wellfound.com/role/sales-representative",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "₹15L (Unspecified USD equivalent / Startup)",
+"company_size": "Startup (<50)",
+"industry": "AI/ML SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following your rapid growth in the AI agentic space and was immediately drawn to your momentum. As a Senior BDR with 3.5+ years of experience scaling outbound pipeline in high-g...",
+"role_type": "sdr"
+},
+{
+"co": "Knaq",
+"title": "Account Executive -- Series A Tech Startup NYC",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience and proven track record of exceeding pipeline quotas make him an ideal candidate to transition into an AE role owning the full sales cycle.",
+"note": "Hey! Saw Knaq is scaling its AE team. As a former D1 athlete with 3.5+ yrs in B2B SaaS building pipeline, I’d love to help drive your full-cycle sa...",
+"url": "https://wellfound.com/jobs/4545068-account-executive-series-a-tech-startup-nyc",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Knaq's growth and noticed you're scaling the AE team to convert top-of-funnel pipeline. With 3.5+ years of B2B SaaS experience—including generating over $1.2M+ in pip...",
+"role_type": "ae"
+},
+{
+"co": "Seed",
+"title": "Sales Team - Full Cycle",
+"score": 85,
+"source": "oxylabs",
+"why": "Seed's high-growth startup environment matches Joseph's hunger, D1 athletic drive, and proven ability to scale outbound pipeline.",
+"note": "Loved seeing Seed's growth. As a former D1 athlete & Cyberbit BDR scaling pipeline to $1.2M+, I'd love to bring that same grit to your sales team!",
+"url": "https://wellfound.com/company/seed-8",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Team,\n\nI’ve been following Seed's momentum and love what you're building. As a high-performing B2B SaaS sales professional with a track record of driving over $1.2M+ in pipeline at Cyberbit and ...",
+"role_type": "sdr"
+},
+{
+"co": "Popl",
+"title": "Sales Development Representative (SDR)",
+"score": 85,
+"source": "oxylabs",
+"why": "Popl's high-energy, fast-growing startup culture heavily rewards Joseph's D1 athlete drive, competitive edge, and consistent 110%+ quota-crushing B2B sales track record.",
+"note": "Loved Popl's energy! As a D1 athlete & Sr BDR who scaled pipeline 110%+ at Cyberbit, I'd love to bring that same hustle to Popl. Open to a chat?",
+"url": "https://www.workatastartup.com/jobs/75603",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Team,\n\nI’ve been following Popl's rapid growth and love the high-energy culture you’ve built around modern networking.\n\nWith 3.5+ years of B2B sales experience—including driving $1.2M+ in pipeli...",
+"role_type": "sdr"
+},
+{
+"co": "Roboflow",
+"title": "Sales Development Representative",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS prospecting and execution skills align well with high-growth YC-backed startup environments.",
+"note": "Hey! Scaled cyber SaaS pipeline to $1.2M+ & hit 110%+ quota. Would love to bring that same high-motor D1 athlete drive to Roboflow's SDR team.",
+"url": "https://www.workatastartup.com/jobs/43042",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "$70K",
+"company_size": "Small (50-200)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Roboflow and love how you're giving software the sense of sight—computer vision is transforming how developers build.\n\nWith 3.5+ years of B2B SaaS sales experience, I...",
+"role_type": "sdr"
+},
+{
+"co": "Zuddl",
+"title": "Sales Development Representative (SDR)- US Location",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's high-velocity B2B SaaS prospecting experience and track record of exceeding quota by 110%+ make him an ideal fit for an early-stage YC-backed startup.",
+"note": "Hey! Saw Zuddl's scaling. As a former D1 athlete with 3.5 yrs B2B SaaS sales, I consistently crush quotas. Let's connect on pipeline growth!",
+"url": "https://www.workatastartup.com/jobs/52857",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Subject: Scaling Zuddl's US pipeline\n\nHi [Name],\n\nI’ve been following Zuddl’s growth and am impressed by how you're scaling the platform.\n\nI’m Joseph Goydish II, a senior B2B SaaS sales professiona...",
+"role_type": "sdr"
+},
+{
+"co": "MOLTEN Cloud",
+"title": "Sales Development Representative, Outbound",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS outbound experience and quota-exceeding track record align perfectly with this remote SDR role.",
+"note": "Saw MOLTEN Cloud's SDR opening. I've scaled outbound pipelines by $1.2M+ and hit 110%+ quota in cloud/cyber SaaS. Let's connect!",
+"url": "https://angel.co/jobs/signup?job_listing_id=308082&slug=wemedia01&source=company+profile&source_content=apply_button",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$65k – $70k",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across MOLTEN Cloud's Outbound SDR opening and wanted to connect directly. With over 3.5 years of B2B SaaS experience—including scaling outbound pipelines by $1.2M+ at Cyberbit an...",
+"role_type": "sdr"
+},
+{
+"co": "Polygate Automation",
+"title": "Sales Development Representative (SDR)",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS pipeline generation and enterprise outbound experience make him an immediate impact player for this remote SDR role.",
+"note": "Saw Polygate's SDR opening. As a Sr BDR who’s consistently hit 110%+ quota in SaaS, I'd love to bring that same outbound engine here. Open to chat?",
+"url": "https://angel.co/jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$24k – $80k",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI saw Polygate Automation's recent SDR opening and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—including consistently e...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Software Sales / Business Development Specialist",
+"score": 85,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS and outbound sales experience directly matches this fast-growing software and AI services role.",
+"note": "Saw your software sales role—I've driven $1.2M+ in SaaS pipeline, hit 110%+ quota, and love scaling early-stage teams. Let's connect!",
+"url": "https://www.reddit.com/r/forhire/comments/1qs1meg/hiring_rockstar_software_sales_business/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your opening for a Software Sales & Business Development Specialist and wanted to reach out directly.\n\nWith over 3.5 years of B2B SaaS and tech sales experience—including g...",
+"role_type": "bdr"
+},
+{
+"co": "Businessonbot",
+"title": "Business Development Representative / Sales Development Representative",
+"score": 82,
+"source": "oxylabs",
+"why": "Joseph's high-volume B2B SaaS outbound and pipeline generation skills align well with scaling a fast-growing YC startup.",
+"note": "Loved seeing Businessonbot's YC growth. I've scaled SaaS pipeline by $1.2M+ & hit 110%+ quota. Would love to bring that drive to your team!",
+"url": "https://wellfound.com/company/businessonbot",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Businessonbot's trajectory since your YC W21 days and am impressed by how you're helping D2C brands scale revenue on WhatsApp and Instagram.\n\nWith 3.5+ years of B2B Sa...",
+"role_type": "sdr"
+},
+{
+"co": "Camber",
+"title": "Sales Development Representative",
+"score": 82,
+"source": "oxylabs",
+"why": "Joseph's heavy outbound SaaS experience and high-volume cold-calling background directly transfer to scaling a fast-growing YC startup's sales motion.",
+"note": "Hey [Name], saw Camber's scaling up. I've scaled pipeline 110%+ in B2B SaaS & love high-growth startup velocity. Open to connecting?",
+"url": "https://www.workatastartup.com/jobs/88197",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "$60K",
+"company_size": "Startup (<50)",
+"industry": "HealthTech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Camber’s growth out of YC and wanted to connect directly. With 3.5+ years of B2B SaaS sales experience, I specialize in building outbound pipelines from scratch, exe...",
+"role_type": "sdr"
+},
+{
+"co": "Buynomics",
+"title": "SaaS Business Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS and high-volume outbound experience exceeds the entry-level requirement, making him an immediate impact player.",
+"note": "Hey [Name], saw your BDR opening at Buynomics. As a Sr BDR scaling cyber SaaS pipelines & mentoring reps, I'd love to bring that edge here!",
+"url": "https://job-boards.eu.greenhouse.io/buynomics/jobs/4742427101",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Buynomics and am impressed by your SaaS growth. I noticed you’re looking for a Business Development Representative, and with my 3.5+ years of B2B SaaS sales experien...",
+"role_type": "bdr"
+},
+{
+"co": "Piston Technologies",
+"title": "SDR - Trade Fleet",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong outbound BDR execution and competitive D1 athlete drive align well with fast-paced early-stage sales teams.",
+"note": "Hey [Name], saw your SDR opening. As a former D1 athlete with 3.5+ yrs exceeding B2B SaaS quotas by 110%+, I'd love to connect!",
+"url": "https://job-boards.greenhouse.io/pistontechnologies/jobs/4305688009",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI came across your SDR opening for Trade Fleet at Piston Technologies and wanted to connect directly.\n\nWith over 3.5 years of high-performing B2B outbound sales experience in tech, I’ve...",
+"role_type": "sdr"
+},
+{
+"co": "Whatnot",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong pipeline generation and outbound execution skills make him well-equipped to scale seller acquisition at Whatnot, though it's a shift from cybersecurity SaaS.",
+"note": "Hey [Name], scaled $1.2M+ in SaaS pipeline and love Whatnot's growth. Would love to bring my outbound playbook to your SDR team. Open to a chat?",
+"url": "https://jobs.ashbyhq.com/whatnot/b4e7be36-af2c-4183-b665-a9b37b6431b8",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "E-Commerce / Marketplace",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Whatnot’s explosive growth in the live-selling space and am very impressed by how you're scaling the marketplace.\n\nWith 3.5+ years of B2B sales experience—including ...",
+"role_type": "sdr"
+},
+{
+"co": "Coram AI",
+"title": "Sales Manager",
+"score": 75,
+"source": "oxylabs",
+"why": "This is a good fit for Joseph's leadership and mentoring experience, though it requires stepping into a full management role from an individual contributor/senior BDR background.",
+"note": "Saw you're scaling Coram AI's sales team. As an ex-D1 athlete and Sr. BDR who's mentored reps to 110%+ quota, I'd love to connect on building pipel...",
+"url": "https://jobs.ashbyhq.com/coram-ai/8113005d-9332-4d1b-ab2d-f8d2889fa444",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Coram AI and noticed you're scaling your sales organization and building out your AE team. \n\nWith 3.5+ years of B2B SaaS and cybersecurity sales experience at compani...",
+"role_type": "other"
+},
+{
+"co": "Unspecified",
+"title": "Inbound SDR",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph brings 3.5+ years of top-tier SaaS and cybersecurity sales experience, though this is an inbound role compared to his heavy outbound background.",
+"note": "Hey Varsha, saw your inbound SDR opening! I’ve spent 3.5+ years exceeding quota in tech sales (Cyberbit/FortifyData). Let's chat!",
+"url": "https://www.linkedin.com/posts/varsha0609_were-hiring-inbound-sdr-remote-activity-7413202592727601152-8Mym",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Varsha,\n\nI saw your post looking for a driven Inbound SDR and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience at companies like Cyberbit and Fortif...",
+"role_type": "sdr"
+},
+{
+"co": "LinkedIn",
+"title": "Sales Development Representative (Remote)",
+"score": 75,
+"source": "oxylabs",
+"why": "This is a broad job search portal link rather than a single company lead, but remote SDR roles match Joseph's core outbound and tech-stack expertise.",
+"note": "Saw your remote SDR listings. As a cyber SaaS sales pro exceeding quota 110%+ with 3.5 yrs exp, I'd love to connect on driving pipeline for you.",
+"url": "https://www.linkedin.com/jobs/sdr-remote-jobs-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI noticed your active listings for remote SDR roles and wanted to connect directly. With 3.5+ years of B2B SaaS and cybersecurity sales experience at companies like Cyberbit and FortifyD...",
+"role_type": "sdr"
+},
+{
+"co": "Flowcandy",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of high-performing B2B SaaS outbound experience and quota-crushing background make him an overqualified, high-impact fit for scaling this SDR function.",
+"note": "Hey - saw Flowcandy's SDR opening. I've scaled pipeline by $1.2M+ in B2B SaaS and consistently hit 110%+ quota. Would love to bring that drive here!",
+"url": "https://www.linkedin.com/jobs/view/sdr-sales-development-representative-at-flowcandy-4452675575",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI noticed Flowcandy is scaling its sales team and looking for a driven SDR. With over 3.5 years of experience in B2B SaaS sales, I have a proven track record of generating millions in qu...",
+"role_type": "sdr"
+},
+{
+"co": "Lendbuzz",
+"title": "Dealership Account Manager",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong B2B enterprise sales, account management, and pipeline generation experience align well with managing high-value dealership portfolios in Atlanta.",
+"note": "Saw the Dealership AM role at Lendbuzz in Atlanta. As a former D1 athlete with 3.5+ yrs B2B sales experience, I’d love to connect!",
+"url": "https://www.linkedin.com/jobs/fintech-account-manager-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week.\n\nI’ve been following Lendbuzz's growth in the Atlanta market and noticed the Dealership Account Manager opening. With over 3.5 years of high-performin...",
+"role_type": "ae"
+},
+{
+"co": "Various / Fintech Companies in Atlanta",
+"title": "Fintech Sales Representative / Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong Atlanta base, outbound sales execution, and high-quota track record translate well to high-growth fintech sectors.",
+"note": "Saw the Atlanta fintech roles. As an ex-Georgia Southern D1 athlete who scales pipeline 110%+, I'd love to connect on driving growth for you.",
+"url": "https://www.linkedin.com/jobs/fintech-sales-jobs-atlanta-metropolitan-area",
+"recruiter": "#",
+"manager": "#",
+"remote": "Hybrid",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI've been following the rapid growth of the fintech sector across the Atlanta Metropolitan Area and noticed your team's expansion.\n\nWith over 3.5 years of high-performing B2B sales expe...",
+"role_type": "sdr"
+},
+{
+"co": "LinkedIn Job Board",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Broad aggregator search for fintech sales, offering high-volume SDR opportunities that match Joseph's outbound expertise.",
+"note": "Joseph Goydish here. Ex-D1 athlete & Cyber SaaS BDR (110%+ quota). Saw fintech sales open—would love to connect on pipeline gen!",
+"url": "https://www.linkedin.com/jobs/fintech-sales-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following your team's growth in the fintech space and wanted to connect directly. As a former D1 athlete and Senior BDR with 3.5+ years of B2B SaaS and cybersecurity experienc...",
+"role_type": "sdr"
+},
+{
+"co": "The Nudge Group",
+"title": "Sales – Fintech, AI, GenAI, & Digital Innovation",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's high-energy startup background and quota-crushing B2B sales experience fit early-stage tech growth.",
+"note": "Love your work with Seed/Series A AI startups! I've scaled pipeline 110%+ in SaaS. Open to chatting?",
+"url": "https://sg.linkedin.com/jobs/view/sales-%E2%80%93-fintech-ai-genai-digital-innovation-seed-series-a-at-the-nudge-group-4317479687",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Fintech / AI / GenAI / SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following The Nudge Group and love your work partnering with top-tier Seed and Series A startups in AI, GenAI, and Fintech.\n\nWith over 3.5 years of high-performing B2B SaaS sale...",
+"role_type": "sdr"
+},
+{
+"co": "LiveCycle",
+"title": "Sustainability Sales Lead - LCA SaaS",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS experience and VC-backed startup adaptability map well to early-stage growth, though it shifts domains from cybersecurity to sustainability.",
+"note": "Hey [Name], saw your LCA SaaS is scaling. As a D1 athlete turned SaaS sales lead (110%+ quota), I thrive in early-stage chaos. Let's connect!",
+"url": "https://be.linkedin.com/jobs/view/sustainability-sales-lead-lca-saas-early-stage-vc-backed-at-livecycle-4264708067?refId=Yn2V5ls8fO%2BVhvyrvd76KQ%3D%3D&trackingId=0aLTfo0sZCOE31Chk2Hcjw%3D%3D&position=7&pageNum=0",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following LiveCycle and love what you're building in the LCA SaaS space. With 3.5+ years of high-performing B2B SaaS sales experience—consistently hitting 110%+ of quota at fa...",
+"role_type": "sdr"
+},
+{
+"co": "Work-bench",
+"title": "B2B SaaS Sales / Portfolio Company Role",
+"score": 75,
+"source": "oxylabs",
+"why": "Work-bench is a B2B enterprise venture fund whose portfolio companies frequently hire SaaS sales talent like Joseph.",
+"note": "Hey! Saw Work-bench backs top B2B software. As a cyber SaaS AE exceeding quota 110%+, I’d love to connect on pipeline gen for your portfolio.",
+"url": "https://wellfound.com/leave/continue?token=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDRG9QZEdGeVoyVjBYM1Z5YkVraUhtaDBkSEE2THk5M2QzY3VkMjl5YXkxaVpXNWphQzVqYjIwR09nWkZWRG9MYzI5MWNtTmxTU0lZY0hKdlptbHNaWE11YzJodmR5NXNhVzVyY3dZN0JsUTZDbXhoWW1Wc1NTSVRiMjVzYVc1bFgySnBiMTkxY213R093WlUiLCJleHAiOiIyMDI2LTA4LTE1VDE0OjUwOjI1Ljk1N1oiLCJwdXIiOiJleGl0X3BhZ2UifX0%3D--845912c0897a9766091b3a3446fa606d0e4d8492",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Small (50-200)",
+"industry": "Venture Capital / Enterprise SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI’ve been following Work-bench’s enterprise software portfolio and the incredible momentum you’re driving across early-stage B2B tech.\n\nMy background is in B2B SaaS and cybersecurity sale...",
+"role_type": "sdr"
+},
+{
+"co": "Two Dots",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong outbound pipeline generation and startup experience make him a solid fit, though the industry shifts from cybersecurity to real estate tech.",
+"note": "Hey! Scaled cyber pipeline to $1.2M+ & hit 110%+ quota. Would love to bring that relentless D1 athlete work ethic to Two Dots. Open to chat?",
+"url": "https://www.workatastartup.com/jobs/76936",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "Real Estate Tech / SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI've been following Two Dots' momentum out of YC and noticed your push to revolutionize real estate leasing. Coming from a background of scaling pipeline by over $1.2M+ in B2B SaaS and c...",
+"role_type": "sdr"
+},
+{
+"co": "Arketa",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Arketa's fast-paced YC startup environment aligns well with Joseph's disciplined execution, outbound expertise, and competitive D1 athlete background.",
+"note": "Hi [Name], love what Arketa's building. As an ex-D1 athlete who scaled pipeline to $1.2M+ in SaaS, I’d love to connect on driving outbound growth!",
+"url": "https://www.workatastartup.com/jobs/65504",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Arketa's growth in the fitness and wellness space and am impressed by your momentum. As a former D1 athlete at Georgia Southern and a senior sales professional with ...",
+"role_type": "sdr"
+},
+{
+"co": "Rockbot",
+"title": "Sales Development Representative",
+"score": 75,
+"source": "oxylabs",
+"why": "Rockbot is hiring an SDR for B2B SaaS, which aligns with Joseph's core prospecting expertise, though the salary listed in INR suggests a geo-mismatched or miscategorized AngelList posting.",
+"note": "Saw Rockbot's SDR opening! As a former D1 athlete who scaled pipeline by $1.2M+ in B2B SaaS, I’d love to bring that same high-output energy here.",
+"url": "https://angel.co/jobs/4271230-director-of-growth-marketing",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "₹20,000 – ₹50,000",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team,\n\nI noticed Rockbot is scaling its B2B SaaS sales engine and looking for driven SDR talent. With over 3.5 years of experience in B2B SaaS, I’ve consistently exceeded quotas at 110%+ and gen...",
+"role_type": "sdr"
+},
+{
+"co": "Unidev",
+"title": "IT Sales / Business Development Executive",
+"score": 75,
+"source": "oxylabs",
+"why": "Joseph's strong outbound B2B sales and pipeline generation experience fits well, though it shifts slightly from cybersecurity to custom software dev.",
+"note": "Hey! Saw Unidev's IT sales role. I've scaled $1.2M+ in pipeline at Cyberbit and regularly hit 110%+ quota. Would love to bring that drive to your t...",
+"url": "https://www.reddit.com/r/forhire/comments/1vv1uze/hiring_it_sales_business_development_executive/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Software Development / IT Services",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi Unidev team,\n\nI came across your opening for an IT Sales / Business Development Executive and wanted to connect. With over 3.5 years of high-performing B2B sales experience in SaaS, I specialize...",
+"role_type": "bdr"
+},
+{
+"co": "SmartAdroit",
+"title": "Business Development Representative (BDR)",
+"score": 72,
+"source": "oxylabs",
+"why": "Joseph's extensive B2B sales and BDR experience aligns well with this outbound sales role, though it appears to be a commission-based structure.",
+"note": "Hey! Saw your BDR opening at SmartAdroit. I've spent 3.5+ years crushing quota in tech sales & building pipelines. Would love to connect!",
+"url": "https://pk.linkedin.com/jobs/view/now-hiring-business-development-sales-upwork-specialists-remote-commission-based-ft-pt-at-smartadroit-4352390355",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Upwork, Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Business Development Representative opening at SmartAdroit and wanted to connect directly. With over 3.5 years of high-performing B2B sales experience—consistently exc...",
+"role_type": "bdr"
+},
+{
+"co": "Chart Industries, Inc",
+"title": "Business Development Associate, Cryo Bulk Tank Solutions",
+"score": 68,
+"source": "oxylabs",
+"why": "While it matches Joseph's remote/Atlanta location preference, it is outside his core B2B cybersecurity SaaS domain.",
+"note": "Hey, saw your BDA opening at Chart. As a former D1 athlete & top-performing B2B SaaS rep, I drive outbound pipeline fast. Let's connect!",
+"url": "https://www.linkedin.com/jobs/inside-sales-remote-jobs-atlanta-ga",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Industrial Equipment / Manufacturing",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Business Development Associate role for Cryo Bulk Tank Solutions at Chart Industries and wanted to connect directly.\n\nWith over 3.5 years of high-performing B2B sales e...",
+"role_type": "bdr"
+},
+{
+"co": "Fluidra North America",
+"title": "Sales Development Representative",
+"score": 68,
+"source": "oxylabs",
+"why": "Joseph's enterprise SaaS and cyber background exceeds this role's requirements, but his Atlanta location provides a local commute fit.",
+"note": "Hey [Name], saw the SDR opening at Fluidra. As an ex-D1 athlete and senior sales rep who scales pipeline 110%+, I'd love to connect!",
+"url": "https://www.indeed.com/q-sales-development-representative-l-sandy-springs,-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "$50k - $60k OTE",
+"company_size": "Large (>1000)",
+"industry": "Manufacturing",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I came across the Sales Development Representative opening for Fluidra North America in the Atlanta area and wanted to connect directly.\n\nWith over 3....",
+"role_type": "sdr"
+},
+{
+"co": "Newsela",
+"title": "Strategic Account Executive",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph's strong outbound sales and pipeline generation skills translate well to enterprise account management, though his domain is cybersecurity SaaS rather than EdTech.",
+"note": "Loved Newsela's mission. As a former D1 athlete, I know teamwork wins. Brought cybersecurity SaaS pipeline up 110%+. Let's chat!",
+"url": "https://job-boards.greenhouse.io/newsela/jobs/8011837",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "EdTech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Newsela’s mission to drive engaging learning experiences and was immediately drawn to your posting for the Strategic Account Executive role.\n\nWith over 3.5 years of ...",
+"role_type": "ae"
+},
+{
+"co": "Anthropic",
+"title": "Strategic Account Executive, Cybersecurity",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph has exceptional B2B cybersecurity SaaS experience and a track record of exceeding quota, the role requires 8+ years of enterprise closing experience, whereas Joseph has 3.5+ years primarily in SDR/BDR and inside sales roles.",
+"note": "Loved your cyber AE role at Anthropic. As a cyber SaaS seller with 110%+ quota attainment, I'd love to connect on pipeline generation strategies.",
+"url": "http://job-boards.greenhouse.io/anthropic/jobs/5075093008",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "AI/ML, Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Anthropic’s incredible growth in AI and cybersecurity applications. With 3.5+ years of B2B cybersecurity SaaS experience—consistently hitting 110%+ of quota at Cyber...",
+"role_type": "ae"
+},
+{
+"co": "Databricks",
+"title": "Cyber Security Gtm Leader",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph has 3.5+ years in cybersecurity SaaS sales, this is a senior GTM leadership role requiring broader strategic oversight than his current individual contributor and operational background.",
+"note": "Loved your Cyber GTM post. As a Cyberbit/FortifyData vet who beats quota 110%+, I'd love to connect on driving pipeline for Databricks.",
+"url": "https://job-boards.greenhouse.io/databricks/jobs/8582312002?utm_source=Colorwave+job+board&utm_medium=getro.com&gh_src=Colorwave+job+board",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "AI/ML, SaaS, Data & AI",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Databricks’ leadership in data and security, and your recent focus on scaling the cyber GTM motion caught my eye. \n\nWith 3.5+ years of B2B SaaS experience scaling pi...",
+"role_type": "other"
+},
+{
+"co": "Commvault",
+"title": "Strategic SaaS Sales Engineer",
+"score": 65,
+"source": "oxylabs",
+"why": "Though Commvault aligns with cybersecurity SaaS, this is a technical Sales Engineer role requiring engineering credentials rather than Joseph's core outbound sales and business development background.",
+"note": "Hi [Name], loved your Cyber Resiliency SaaS push. As a former D1 athlete who scaled pipeline 110%+ at Cyberbit, I'd love to connect on driving growth!",
+"url": "https://job-boards.greenhouse.io/commvault/jobs/5205870008",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Commvault's leadership in Cyber Resiliency SaaS solutions and wanted to connect directly. \n\nWith over 3.5 years of B2B SaaS and cybersecurity sales experience at com...",
+"role_type": "other"
+},
+{
+"co": "Stripe",
+"title": "Sales Development Representative (Mandarin-speaking)",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph is a top-tier B2B SaaS BDR with proven enterprise experience, this specific role requires Mandarin-speaking skills which are not present in his resume.",
+"note": "Hey! Loved seeing Stripe's GCN growth. I've scaled $1.2M+ in SaaS pipeline and hit 110%+ quotas. Would love to connect on driving pipeline!",
+"url": "https://job-boards.greenhouse.io/stripe/jobs/8123400",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Fintech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Stripe’s expansion in the Greater China region and am consistently impressed by your market impact.\n\nWhile my primary background is scaling enterprise outbound pipel...",
+"role_type": "sdr"
+},
+{
+"co": "Enginy",
+"title": "Sales Development Representative, UK Market",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph has 3.5+ years of strong B2B SDR experience and exceeds quota, though the UK market focus presents a geographic misalignment for his current Atlanta base.",
+"note": "Hey! Saw your UK SDR opening. I've scaled B2B SaaS pipeline by 110%+ & generated $1.2M+ at Cyberbit. Would love to bring that drive to Enginy!",
+"url": "http://job-boards.eu.greenhouse.io/enginy/jobs/4876370101",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across Enginy's SDR opening for the UK market and wanted to connect directly. With over 3.5 years of high-performing B2B SaaS and cybersecurity sales experience—including generati...",
+"role_type": "sdr"
+},
+{
+"co": "Tray.ai",
+"title": "Sales Engineer",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph brings strong B2B SaaS sales experience, though this role requires technical pre-sales and solutions engineering expertise rather than pure outbound business development.",
+"note": "Hey [Name], fellow D1 athlete turned SaaS sales pro here. Love Tray.ai's automation platform. Would love to connect about the SE role!",
+"url": "https://jobs.ashbyhq.com/tray-ai/5d7c4273-813f-469e-90f4-0ffe6fedf618",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "SaaS",
+"tech_stack": "iPaaS, automation, AI platforms",
+"outreach_email": "Hi [Name],\n\nI’ve been following Tray.ai and am consistently impressed by how your automation and iPaaS platform streamlines complex workflows for enterprise teams.\n\nWith 3.5+ years of B2B SaaS expe...",
+"role_type": "other"
+},
+{
+"co": "Basis AI",
+"title": "Sales Leader",
+"score": 65,
+"source": "oxylabs",
+"why": "This is a leadership role, but Joseph is an IC with 3.5+ years of B2B SaaS experience looking for senior individual contributor or early-stage leadership roles.",
+"note": "Scaling Basis AI's sales? As a Cyberbit/FortifyData senior seller who exceeded quota 110%+, I'd love to discuss building your pipeline.",
+"url": "https://jobs.ashbyhq.com/basis-ai/3d878a0d-c01c-4b7f-b6b2-0178e4f30ee6",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Basis AI and am impressed by how you're scaling your GTM motion.\n\nWith 3.5+ years of B2B SaaS and cybersecurity sales experience at Cyberbit and FortifyData, I've con...",
+"role_type": "sdr"
+},
+{
+"co": "SmartAdroit",
+"title": "Business Development Specialist",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS and cybersecurity enterprise outbound experience far exceeds this general commission-based role.",
+"note": "Hey! Saw SmartAdroit's remote BDs. I've scaled $1.2M+ in SaaS pipeline & hit 110%+ quota. Open to a quick chat on scaling outbound?",
+"url": "https://pk.linkedin.com/jobs/view/now-hiring-business-development-sales-upwork-specialists-remote-commission-based-ft-pt-at-smartadroit-4351129441",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Upwork",
+"outreach_email": "Hi there,\n\nI came across SmartAdroit's remote Business Development openings and wanted to connect directly. Over the last 3.5+ years, I’ve specialized in driving outbound pipeline generation and en...",
+"role_type": "bdr"
+},
+{
+"co": "Chronicle Heritage",
+"title": "Business Development Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph has strong B2B SaaS and cybersecurity background, but this role is in heritage resources management rather than tech/SaaS.",
+"note": "Hey [Name], saw Chronicle's remote BDR opening. I’ve spent 3.5+ yrs exceeding quota in B2B SaaS. Would love to bring that drive to your team!",
+"url": "https://www.linkedin.com/jobs/sales-development-representative-saas-jobs-phoenix-az",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Cultural Resources / Consulting",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Hiring Manager Name],\n\nI came across Chronicle Heritage's Remote Business Development Representative opening and wanted to connect directly. While my background is rooted in 3.5+ years of high-...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Territory Seed Sales Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "The title suggests an early-stage sales or territory development role, but lacks specific B2B SaaS or cybersecurity context to fully leverage Joseph's specialized background.",
+"note": "Hey! Saw your seed sales role. As a former D1 athlete who scaled cyber SaaS pipelines to $1.2M+, I love early-stage grind. Let's connect!",
+"url": "https://www.linkedin.com/jobs/territory-seed-sales-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Territory Seed Sales opening and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience at companies like Cyberbit and FortifyD...",
+"role_type": "other"
+},
+{
+"co": "Unspecified",
+"title": "Seed Sales Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph excels in fast-paced B2B SaaS and cybersecurity sales, making a generic aggregator search less tailored than his targeted enterprise experience.",
+"note": "Hey! Saw your seed sales openings. As a former D1 athlete with 3.5+ yrs B2B SaaS sales experience, I'd love to help scale your pipeline. Open to chat?",
+"url": "https://www.linkedin.com/jobs/seed-sales-jobs",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your seed-stage sales listings and wanted to connect directly. I have 3.5+ years of B2B SaaS and cybersecurity sales experience, consistently exceeding quota at 110%+ while...",
+"role_type": "other"
+},
+{
+"co": "StealthWatch",
+"title": "Regional Sales Manager",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph has strong B2B cybersecurity SaaS experience, but moving straight from 3.5 years of BDR/sales ops into a senior closing Regional Sales Manager role may be a stretch.",
+"note": "Saw your RSM opening at StealthWatch. I've scaled cyber pipeline past $1.2M at Cyberbit & FortifyData. Would love to connect!",
+"url": "https://sg.linkedin.com/jobs/view/regional-sales-manager-early-stage-security-vendor-paying-up-to-%24350-000-ote-%2B-stock-at-stealthwatch-4060344678",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Up to $350,000 OTE + Stock",
+"company_size": "Startup (<50)",
+"industry": "Cybersecurity",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following StealthWatch and saw your opening for a Regional Sales Manager. With 3.5+ years scaling outbound pipeline for cybersecurity SaaS leaders like Cyberbit and FortifyDat...",
+"role_type": "other"
+},
+{
+"co": "Division 7 Supply Inc.",
+"title": "Sales Development Representative / Inside Sales Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph has exceptional B2B SaaS and cybersecurity experience, this role at a building supply distributor falls outside his tech domain expertise.",
+"note": "Hey [Name], saw your SDR opening in Cumming. I've scaled $1.2M+ in pipeline in B2B SaaS and love high-energy sales floors. Let's connect!",
+"url": "https://www.indeed.com/q-sales-development-representative-l-atlanta,-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Building Materials / Distribution",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI came across the Sales Development / Inside Sales opening for Division 7 Supply and wanted to connect. While my background is rooted in B2B SaaS and cybersecurity sales—where I consist...",
+"role_type": "sdr"
+},
+{
+"co": "Cox Media Group",
+"title": "Sales Development Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "While it is a local sales role in Atlanta, it is media sales rather than Joseph's core background in high-growth B2B cybersecurity SaaS.",
+"note": "Hey [Name], saw your SDR opening at Cox. As a former D1 athlete with 3.5+ yrs in B2B SaaS exceeding quota 110%+, I'd love to connect!",
+"url": "https://www.indeed.com/q-sales-development-representative-l-duluth,-ga-jobs.html",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Media / Broadcasting",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I've been following Cox Media Group's presence in Atlanta and noticed your opening for a Sales Development Representative.\n\nWith over 3.5 years of hig...",
+"role_type": "sdr"
+},
+{
+"co": "Techstars",
+"title": "Senior Program Manager",
+"score": 65,
+"source": "oxylabs",
+"why": "This program management role is a bit out of Joseph's core B2B sales/cybersecurity trajectory, though his sports background aligns with Techstars Sports.",
+"note": "Loved seeing your focus on Techstars Sports! As a former D1 athlete & sales pro, I'd love to connect and share how I drive pipeline. Open to chat?",
+"url": "https://wellfound.com/company/techstars/people",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Venture Capital & Accelerator",
+"tech_stack": "Customer Relationship Management",
+"outreach_email": "Hi [Name],\n\nI’ve been following Techstars Sports and love the work you’re doing with early-stage founders. As a former D1 collegiate athlete from Georgia Southern and a top-performing B2B sales pro...",
+"role_type": "other"
+},
+{
+"co": "Conduit",
+"title": "Sales Development Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "Conduit sells into high-touch B2C, whereas Joseph's 3.5+ years of experience is strictly in complex B2B SaaS and cybersecurity enterprise prospecting.",
+"note": "Saw Conduit's YC growth! While I scale enterprise cybersecurity pipeline at Cyberbit, love high-velocity B2C SaaS. Open to a quick chat?",
+"url": "https://www.workatastartup.com/jobs/90390",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Startup (<50)",
+"industry": "AI/ML",
+"tech_stack": "Conversational AI",
+"outreach_email": "Hi Team,\n\nI’ve been following Conduit’s growth since YC and am impressed by your conversational AI platform. While my background is rooted in B2B SaaS and cybersecurity—where I consistently exceede...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Business Development Associate",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph is an enterprise B2B SaaS and cybersecurity sales expert, the lead description is extremely vague and lacks company or tech details.",
+"note": "Saw your BD opening! I've spent 3.5+ yrs exceeding quota 110%+ in cyber SaaS outbound. Would love to bring that D1 work ethic to your team.",
+"url": "https://www.reddit.com/r/forhire/comments/1uoovaw/hiring_remote_business_development_associate/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Business Development Associate opening and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—consistently exceeding quota ...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified Cloud Consulting Firm",
+"title": "Fractional SDR",
+"score": 65,
+"source": "oxylabs",
+"why": "While Joseph has strong outbound experience, this fractional/hourly gig is a step down from his enterprise SaaS and cybersecurity background.",
+"note": "Saw your fractional SDR role. I've scaled pipeline 110%+ in cyber SaaS, driving $1.2M+ in enterprise deals. Let's connect!",
+"url": "https://www.reddit.com/r/forhire/comments/1kktoxk/hiring_remote_fractional_sdr_for_cloud_consulting/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$400/meeting + $30/hr",
+"company_size": "Company size not specified",
+"industry": "Cloud Consulting",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your remote fractional SDR posting for cloud consulting and wanted to connect. With 3.5+ years of B2B SaaS and cybersecurity experience—including generating over $1.2M in p...",
+"role_type": "sdr"
+},
+{
+"co": "Unspecified",
+"title": "Contract Business Development Manager",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph has strong B2B SaaS and outbound sales experience, but this role is in social commerce rather than his core cybersecurity domain.",
+"note": "Saw your BDM role! As a former D1 athlete, I excel at scaling pipeline fast. Let's connect on how I drove $1.2M+ in SaaS pipeline.",
+"url": "https://www.reddit.com/r/forhire/comments/1ti1q86/hiring_contract_business_development_manager/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Social Commerce",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Contract Business Development Manager opening and wanted to connect. While my background is rooted in B2B SaaS and cybersecurity—where I consistently hit 110%+ of quot...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Sales / Business Development Associate",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph has strong B2B SaaS sales experience, but this role is in mobile app/digital product development rather than his core cybersecurity SaaS expertise.",
+"note": "Saw you're scaling mobile/SaaS sales. I've scaled B2B SaaS pipeline by $1.2M+ and hit 110%+ quota. Would love to bring that drive to your team!",
+"url": "https://www.reddit.com/r/forhire/comments/1rm4d75/hiring_sales_business_development_associate/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "SaaS / Digital Products",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your opening for a Sales / Business Development Associate and wanted to connect. With over 3.5 years of B2B SaaS experience, I specialize in driving outbound pipeline gener...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Business Development Representative",
+"score": 65,
+"source": "oxylabs",
+"why": "Joseph's 3.5+ years of B2B SaaS and cybersecurity experience exceeds standard BDR requirements, but the lead lacks specific company and industry details.",
+"note": "Saw your BDR post. I have 3.5+ yrs B2B SaaS experience, consistently hit 110%+ quota, and built outbound playbooks. Let's connect!",
+"url": "https://www.reddit.com/r/forhire/comments/1vb6pgz/hiring_us_citizen_business_development/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Business Development Representative opening and wanted to connect directly. With over 3.5 years of B2B SaaS and cybersecurity sales experience—including consistently h...",
+"role_type": "bdr"
+},
+{
+"co": "Samsara",
+"title": "Director, Field Sales Engineering",
+"score": 45,
+"source": "oxylabs",
+"why": "This is a senior sales engineering leadership role requiring deep technical SE management experience, which does not align with Joseph's IC/BDR sales background.",
+"note": "Hey! Ex-Georgia Southern athlete & Cyberbit BDR here. Love Samsara's growth. Would love to connect about future enterprise sales opportunities!",
+"url": "https://job-boards.greenhouse.io/samsara/jobs/7695309",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "IoT / SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI’ve been following Samsara’s incredible growth in the IoT and connected operations space and wanted to connect. \n\nI’m Joseph Goydish II, a former NCAA D1 athlete from Georgia Southern w...",
+"role_type": "other"
+},
+{
+"co": "Arena",
+"title": "Business Development Representative [BDR Brazil]",
+"score": 45,
+"source": "oxylabs",
+"why": "This role requires targeting the Brazilian market which does not align with Joseph's US-based enterprise SaaS and cybersecurity prospecting background.",
+"note": "Hi [Name], saw your BDR opening at Arena. With 3.5+ years scaling B2B pipeline & mentoring reps, I'd love to connect on driving growth!",
+"url": "http://job-boards.greenhouse.io/arenaim/jobs/4108061005",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI’ve been following Arena’s growth and noticed your opening for a Business Development Representative. While my primary expertise is in US-based B2B cybersecurity SaaS, my background tr...",
+"role_type": "bdr"
+},
+{
+"co": "Ohalo Genetics",
+"title": "Technical Sales Representative – PNW & Treasure Valley",
+"score": 45,
+"source": "oxylabs",
+"why": "This is an agricultural and agronomy sales role requiring 5+ years of industry experience, which does not align with Joseph's 3.5+ years of B2B cybersecurity SaaS background.",
+"note": "Hi! Saw your PNW sales opening at Ohalo. While my background is in B2B SaaS cybersecurity, my D1 athlete drive scales fast. Let's connect!",
+"url": "https://job-boards.greenhouse.io/ohalogenetics/jobs/4700876005",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Agriculture / Biotech",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Technical Sales Representative role for the PNW and Treasure Valley regions at Ohalo Genetics and wanted to connect.\n\nWhile my core 3.5+ years of commercial experience ...",
+"role_type": "other"
+},
+{
+"co": "Harvey",
+"title": "Business Development Lead, Cloud & AI",
+"score": 45,
+"source": "oxylabs",
+"why": "The role requires 7-10+ years of enterprise SaaS and partnerships experience, which exceeds Joseph's 3.5+ years of BDR/ISR experience.",
+"note": "Hey! Saw your Cloud & AI BD Lead role. I bring 3.5+ yrs scaling B2B SaaS pipeline, crushing quota 110%+, and leading teams. Let's connect!",
+"url": "https://jobs.ashbyhq.com/harvey/5dced8b9-8d6a-427c-9b09-a92eb07de87f",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "AI/ML",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Business Development Lead, Cloud & AI role at Harvey and wanted to connect. While the posting calls for 7-10 years, I wanted to reach out directly because of my strong ...",
+"role_type": "bdr"
+},
+{
+"co": "Anderson Agency LLC",
+"title": "Remote Sales Specialist (Entry-Level)",
+"score": 45,
+"source": "oxylabs",
+"why": "This is an entry-level position that significantly underlevels Joseph's 3.5+ years of senior B2B SaaS cybersecurity experience and proven leadership history.",
+"note": "Joseph here. Saw your remote sales role. With 3.5+ yrs scaling cybersecurity SaaS pipeline ($1.2M+) & mentoring reps, let's chat!",
+"url": "https://www.linkedin.com/jobs/view/remote-sales-specialist-entry-level-will-train-flexible-schedule-at-anderson-agency-llc-4441978175",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Remote Sales Specialist opening at Anderson Agency and wanted to connect directly. While the role is listed as entry-level, my background brings immediate, high-impact ...",
+"role_type": "other"
+},
+{
+"co": "Jampp",
+"title": "Sales Director",
+"score": 45,
+"source": "oxylabs",
+"why": "This is a senior leadership/Director role based in Singapore, which is too senior and geographically mismatched for Joseph's mid-level US-based IC sales background.",
+"note": "Hi! Saw your Sales Director post. I scale SaaS revenue 110%+ with 3.5 yrs cyber experience & D1 grit. Open to a chat?",
+"url": "https://wellfound.com/company/metro-accelerator",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Medium (200-1000)",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across the Sales Director opening via METRO Accelerator and wanted to connect directly. While my background is rooted in B2B SaaS and cybersecurity sales execution rather than reg...",
+"role_type": "other"
+},
+{
+"co": "Andreessen Horowitz (a16z)",
+"title": "Sales & Go-to-Market Playbooks and Growth Strategies Content/Lead",
+"score": 45,
+"source": "oxylabs",
+"why": "This is a media category/resource page rather than an active B2B SaaS sales role, making it a poor fit for Joseph's background.",
+"note": "Not an active job lead—this is a16z's content hub for GTM strategies. Joseph is a top B2B cybersecurity SaaS sales pro open to new roles.",
+"url": "https://a16z.com/category/growth/sales-and-go-to-market/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Venture Capital",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi a16z team, I noticed your Sales & GTM content hub features top-tier strategies for scaling tech companies. As a top-performing Senior BDR with 3.5+ years in cybersecurity SaaS (Cyberbit, Fortify...",
+"role_type": "sdr"
+},
+{
+"co": "Andreessen Horowitz (a16z)",
+"title": "AI Sales Transformation Analyst / Portfolio Sales Lead",
+"score": 45,
+"source": "oxylabs",
+"why": "This is an a16z industry article/thought leadership piece rather than an active sales job opening for Joseph.",
+"note": "Loved your a16z piece on AI transforming sales. As a senior BDR scaling cybersecurity pipelines, I'm eager to help portfolio companies adapt.",
+"url": "https://a16z.com/ai-transforms-sales/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Venture Capital / AI/ML",
+"tech_stack": "Salesforce, 11x",
+"outreach_email": "Hi team,\n\nI recently read your a16z piece on 'The Death of a Salesforce' and how AI is automating the SDR motion. As a senior BDR with 3.5+ years of experience in cybersecurity SaaS—consistently ex...",
+"role_type": "sdr"
+},
+{
+"co": "a16z speedrun",
+"title": "AI GTM / Founder Contributor",
+"score": 45,
+"source": "oxylabs",
+"why": "This is an article about founders using AI for GTM without a sales team, meaning it is content rather than an actual open sales role for Joseph.",
+"note": "Loved your piece on AI for GTM! Even with browser agents, enterprise cyber sales need a human athlete's resilience. Open to connecting?",
+"url": "https://speedrun.substack.com/p/ai-tools-for-gtm-and-sales",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "AI/ML",
+"tech_stack": "Browser agents, AI Tools",
+"outreach_email": "Hi a16z Speedrun team,\n\nI really enjoyed your recent breakdown on how early-stage founders are leveraging AI tools and browser agents to handle GTM motions without a traditional sales team.\n\nWhile ...",
+"role_type": "other"
+},
+{
+"co": "Unspecified",
+"title": "Technical Sales Representative (German + English Speaking)",
+"score": 45,
+"source": "oxylabs",
+"why": "Joseph lacks the required German language proficiency for this bilingual role, making it a poor fit despite his SaaS background.",
+"note": "Hi! Saw your bilingual sales role. While I bring 3.5+ years of B2B SaaS success, I don't speak German. Open to English-only tech sales roles?",
+"url": "https://angel.co/jobs/4497235-technical-sales-representative-german-english-speaking",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "€75k – €85k",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Technical Sales Representative opening on Wellfound and wanted to connect directly. While my background is a strong match for tech sales—bringing 3.5+ years of B2B Saa...",
+"role_type": "other"
+},
+{
+"co": "Wonderschool",
+"title": "Business Development Representative (BDR)",
+"score": 45,
+"source": "oxylabs",
+"why": "This is a junior BDR role for SaaS with low compensation and geographic restrictions that do not align with Joseph's senior cyber SaaS background.",
+"note": "Hey [Name], saw Wonderschool's BDR opening. As a former D1 athlete with 3.5+ yrs scaling cyber SaaS pipeline, I'd love to bring that drive here.",
+"url": "https://angel.co/jobs/4505498-strategic-enterprise-sales-director",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$24k – $36k CAD",
+"company_size": "Company size not specified",
+"industry": "SaaS",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi [Name],\n\nI hope you're having a great week. I came across Wonderschool's BDR opening and wanted to connect directly. While my background is rooted in B2B cybersecurity SaaS—where I spent 3.5+ ye...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified Software Development Agency",
+"title": "US Based Upwork Business Development Specialist",
+"score": 45,
+"source": "oxylabs",
+"why": "This is a low-fit freelance gig focused on Upwork lead generation for a dev agency rather than Joseph's enterprise cybersecurity SaaS background.",
+"note": "Saw your agency's Upwork BD role. As an enterprise SaaS sales pro, I scale pipelines fast. Open to a quick chat on driving agency growth?",
+"url": "https://www.reddit.com/r/forhire/comments/1uy0r64/hiring_us_based_upwork_business_development/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$30–$40/hr + Commission",
+"company_size": "Company size not specified",
+"industry": "Software Development",
+"tech_stack": "Upwork",
+"outreach_email": "Hi there,\n\nI came across your opening for a US-based Business Development Specialist to manage Upwork pipeline for your software development agency.\n\nWhile my primary background is in enterprise B2...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Business Development Manager",
+"score": 45,
+"source": "oxylabs",
+"why": "This hourly role is a severe step down in pay, title, and scope for a senior B2B SaaS cybersecurity sales professional generating $1.2M+ in pipeline.",
+"note": "Hi! Saw your BDM opening. With 3.5+ years scaling cyber SaaS pipelines & exceeding quota 110%+, I'd love to help drive your growth. Open to a chat?",
+"url": "https://www.reddit.com/r/forhire/comments/1uk18wb/hiring_business_development_manager_1525hr_remote/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$15-25/hr",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Business Development Manager opening and wanted to connect directly. While my background is deeply rooted in enterprise B2B SaaS and cybersecurity sales—where I’ve dri...",
+"role_type": "bdr"
+},
+{
+"co": "Unspecified",
+"title": "Part-Time Project & Business Development Coordinator",
+"score": 35,
+"source": "oxylabs",
+"why": "This is a part-time, low-paying general project coordination role that drastically underutilizes Joseph's enterprise B2B cybersecurity SaaS closing and pipeline generation skills.",
+"note": "Saw your BD Coordinator role. I bring 3.5+ yrs scaling B2B SaaS pipeline at Cyberbit/FortifyData ($1.2M+ gen). Let's connect!",
+"url": "https://www.reddit.com/r/forhire/comments/1ufd3kq/hiring_parttime_project_business_development/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote",
+"salary": "$15-25/hr",
+"company_size": "Company size not specified",
+"industry": "Unspecified",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there,\n\nI came across your Part-Time Project & Business Development Coordinator opening and wanted to connect. While my background is deeply rooted in high-growth B2B cybersecurity SaaS sales ra...",
+"role_type": "bdr"
+},
+{
+"co": "Bayer",
+"title": "Sales Agronomist III",
+"score": 15,
+"source": "oxylabs",
+"why": "This is an on-site agriculture operations role in Minnesota, whereas Joseph is an Atlanta-based B2B SaaS and cybersecurity sales specialist.",
+"note": "Not a fit for your B2B SaaS/cybersecurity sales background, Joseph. Better to target tech or cyber sales roles.",
+"url": "https://www.linkedin.com/jobs/agronomy-jobs-minnesota",
+"recruiter": "#",
+"manager": "#",
+"remote": "On-site",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Agriculture",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi team, I came across the Sales Agronomist opening at Bayer in Minnesota. While my background is deeply rooted in high-performing B2B SaaS and cybersecurity sales rather than agriculture operation...",
+"role_type": "sdr"
+},
+{
+"co": "Andreessen Horowitz (a16z)",
+"title": "Podcast / Media Lead (Not a Sales Role)",
+"score": 15,
+"source": "oxylabs",
+"why": "This is a podcast lead, not an open sales role, making it a poor fit for Joseph's B2B SaaS and cybersecurity sales background.",
+"note": "Loved the recent a16z Show episode on AI sales strategies. As a B2B SaaS sales pro, I'd love to connect and share notes on outbound tactics!",
+"url": "https://podcasts.apple.com/co/podcast/the-a16z-show/id842818711",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Large (>1000)",
+"industry": "Venture Capital / Media",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi a16z Team,\n\nI’ve been a regular listener of The a16z Show and thoroughly enjoyed the recent insights on AI sales strategies and go-to-market execution.\n\nMy background is in high-performing B2B c...",
+"role_type": "sdr"
+},
+{
+"co": "Not Boring / a16z",
+"title": "Unspecified",
+"score": 15,
+"source": "oxylabs",
+"why": "This is a newsletter article about venture capital history rather than a direct B2B sales opening matching Joseph's cybersecurity background.",
+"note": "Not applicable as this is a newsletter article rather than an open sales role, but happy to connect and discuss B2B SaaS pipeline building!",
+"url": "https://www.notboring.co/p/a16z-the-power-brokers",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Venture Capital / Media",
+"tech_stack": "Unspecified",
+"outreach_email": "Hi there, I came across your piece on a16z and venture capital history while researching top-tier tech ecosystems. Though this particular link is a publication rather than a job opening, I wanted t...",
+"role_type": "other"
+},
+{
+"co": "Good Car Bad Car",
+"title": "Toyota Sequoia Sales Figures",
+"score": 90,
+"source": "oxylabs",
+"why": "This is an automotive statistics and data website, not a B2B SaaS sales job lead.",
+"note": "Not applicable as this is an automotive statistics webpage and not a B2B tech sales job opportunity.",
+"url": "https://www.goodcarbadcar.net/toyota-sequoia-sales-figures/",
+"recruiter": "#",
+"manager": "#",
+"remote": "Remote status not specified",
+"salary": "Salary not specified",
+"company_size": "Company size not specified",
+"industry": "Automotive Data",
+"tech_stack": "Unspecified",
+"outreach_email": "Not applicable. The provided lead link and description point to an automotive sales figures and statistics database (Good Car Bad Car) rather than an actual job opening. Joseph is an experienced B2...",
+"role_type": "sdr"
+}
+];
+const STATUSES = ["new","applied","replied","interview"];
+const STATUS_LABEL = {new:'New',applied:'Applied',replied:'Replied',interview:'Interview'};
+let statuses = {};
+try { const s = localStorage.getItem('fil_statuses'); if (s) statuses = JSON.parse(s); } catch(e){}
+
+function keyOf(l){ return (l.co+'|'+l.title+'|'+l.url).replace(/[^a-z0-9|]/gi,''); }
+function statusOf(l){ return statuses[keyOf(l)] || 'new'; }
+function setStatus(k, s){ statuses[k]=s; try{localStorage.setItem('fil_statuses',JSON.stringify(statuses));}catch(e){} render(); }
+
+function srcTag(src){
+  const s=String(src||'').toLowerCase();
+  if(s.includes('greenhouse')) return '<span class="tag gh">Greenhouse</span>';
+  if(s.includes('ashby')) return '<span class="tag ash">Ashby</span>';
+  if(s.includes('linkedin')) return '<span class="tag li">LinkedIn</span>';
+  return '<span class="tag md">'+(String(src||'Other').split(' ')[0]||'')+'</span>';
+}
+
+function esc(x){ return String(x==null?'':x).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"'); }
+
+function render(){
+  var o={new:0,applied:0,replied:0,interview:0,total:LEADS.length};
+  LEADS.forEach(l=>{const s=statusOf(l); if(o[s]!=null)o[s]++;});
+  document.getElementById('statsRow').innerHTML=[
+    ['Total leads',o.total,'s-new'],['New',o.new,'s-applied'],['Applied',o.applied,'s-applied'],['Replied',o.replied,'s-replied'],['Interview',o.interview,'s-interview']
+  ].map(c=>`<div class="stat-card"><b class="">${c[1]}</b><span>${c[0]}</span></div>`).join('');
+
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const active=document.querySelector('.chip.active');
+  const filter=active?active.dataset.status:'all';
+  const rActive=document.querySelector('.role-chip.active');
+  const rFilter=rActive?rActive.dataset.role:'all';
+  const list=LEADS.filter(l=>{
+    const mq=!q||(l.co+' '+l.title).toLowerCase().includes(q);
+    const ms=filter==='all'||statusOf(l)===filter;
+    const mr=rFilter==='all'||String(l.role_type||'other')===rFilter;
+    return mq&&ms&&mr;
+  }).sort((a,b)=>b.score-a.score);
+
+  const el=document.getElementById('leadList');
+  if(!list.length){el.innerHTML='';document.getElementById('empty').style.display='block';return;}
+  document.getElementById('empty').style.display='none';
+
+  el.innerHTML=list.map(l=>{
+    const k=keyOf(l), cur=statusOf(l);
+    const scls=l.score>=90?'hi':(l.score>=75?'mid':'low');
+    const note=l.note?`<div class="note">&ldquo;${esc(l.note)}&rdquo;</div>`:'';
+    const links=`<div class="lead-links">`+
+      (l.url&&l.url!=='#'?`<a href="${esc(l.url)}" target="_blank" rel="noopener">Job</a>`:'')+
+      (l.manager&&l.manager!=='#'?`<a href="${esc(l.manager)}" target="_blank" rel="noopener">Mgr</a>`:'')+
+      (l.note?`<button onclick="copyNote('${k}')">Copy note</button>`:'')+
+      (l.outreach_email?`<button onclick="copyEmail('${k}')">Copy email</button>`:'')+
+      `</div>`;
+    const stButtons=Object.keys(STATUS_LABEL).map(s2=>
+      `<button class="${s2===cur?'on':''}" onclick="setStatus('${k}','${s2}')">${STATUS_LABEL[s2]}</button>`
+    ).join('');
+    return `<div class="lead">
+      <div class="score ${scls}">${l.score}</div>
+      <div class="info">
+        <div class="co-row"><b>${esc(l.co)}</b>${roleBadge(l.role_type)}${srcTag(l.source)}<span class="stat-label st ${cur}">${STATUS_LABEL[cur]}</span></div>
+        <div class="role">${esc(l.title)}</div>
+        <div class="why">${esc(l.why)}</div>
+        <div class="details">${dChip('📍',l.remote)}${dChip('💰',l.salary)}${dChip('🏢',l.company_size)}${dChip('🏭',l.industry)}</div>
+        ${note}
+      </div>
+      <div class="actions">
+        ${links}
+        <div class="st-actions">${stButtons}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function dChip(icon, val){
+  if(!val || /unspecified|not specified/i.test(String(val))) return '';
+  return `<span class="dchip">${icon} ${esc(val)}</span>`;
+}
+
+function roleBadge(rt){
+  const map={sdr:['SDR','#22d3ee'],bdr:['BDR','#a78bfa'],inside:['Inside','#34d399'],ae:['AE','#fbbf24'],other:['Other','#64748b']};
+  const m=map[rt]||map.other;
+  return `<span class="role-badge" style="background:${m[1]}22;color:${m[1]};border-color:${m[1]}55">${m[0]}</span>`;
+}
+
+function copyNote(k){
+  const l=LEADS.find(x=>keyOf(x)===k);
+  if(!l||!l.note)return;
+  const t=document.createElement('textarea');
+  t.value=l.note;document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(t);
+  toast('Outreach note copied');
+}
+
+function copyEmail(k){
+  const l=LEADS.find(x=>keyOf(x)===k);
+  if(!l||!l.outreach_email)return;
+  const t=document.createElement('textarea');
+  t.value=l.outreach_email;document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(t);
+  toast('Outreach email copied');
+}
+
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// init
+document.querySelectorAll('.chip:not(.role-chip)').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.chip:not(.role-chip)').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');render();
+}));
+document.querySelectorAll('.role-chip').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.role-chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');render();
+}));
+document.getElementById('search').addEventListener('input',render);
+document.getElementById('waitlistForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var em=document.getElementById('wlEmail');
+  if(!em.value) return;
+  try{ localStorage.setItem('fil_waitlist', em.value); }catch(err){}
+  var subject=encodeURIComponent('FirstInLine early access');
+  var body=encodeURIComponent('Hey Joseph, count me in.\n\n' + em.value + '\n\n(From the FirstInLine site)');
+  window.location.href='mailto:josephg0407@proton.me?subject='+subject+'&body='+body;
+  toast('Opening email \u2014 or saved locally. I\u2019ll be in touch.');
+});
+
+// hero stats
+(function(){
+  const hi=LEADS.filter(l=>l.score>=96).length;
+  const src=new Set(LEADS.map(l=>String(l.source||'').split(' ')[0])).size;
+  const ready=LEADS.filter(l=>l.note).length;
+  document.getElementById('heroStats').innerHTML=
+    `<div class="hero-mini"><b>${LEADS.length}</b><span>live leads</span></div>`+
+    `<div class="hero-mini"><b>${hi}</b><span>96+ matches</span></div>`+
+    `<div class="hero-mini"><b>${src}</b><span>sources</span></div>`+
+    `<div class="hero-mini"><b>${ready}</b><span>outreach ready</span></div>`;
+})();
+render();
+</script>
+</body>
+</html>

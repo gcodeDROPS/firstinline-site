@@ -1,0 +1,345 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<style>
+body { font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+       max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1a202c; line-height: 1.6; }
+h1 { font-size: 1.9em; border-bottom: 3px solid #3b82f6; padding-bottom: 8px; }
+h2 { font-size: 1.4em; margin-top: 1.6em; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+h3 { font-size: 1.15em; margin-top: 1.2em; }
+code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+pre { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; font-size: 0.92em; }
+th { background: #f1f5f9; }
+blockquote { border-left: 4px solid #3b82f6; margin: 12px 0; padding: 4px 16px; background: #f8fafc; color: #475569; }
+hr { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+li { margin: 4px 0; }
+</style>
+</head><body><h1>Business Plan — FirstInLine (working name)</h1>
+<p><strong>AI Job-Hunt Command Center for Sales Professionals</strong>
+Founder: Joseph Goydish II | Date: 2026-08-22 | Status: Pre-launch (MVP built)</p>
+<hr />
+<h2>1. Executive Summary</h2>
+<p>FirstInLine is a subscription web app that treats a job search like a sales pipeline. It finds B2B sales job postings <strong>before they flood</strong> (direct ATS boards, stealth startups, VC portfolio boards, LinkedIn hiring posts), scores each lead against the user's resume using AI, and generates personalized outreach messages that get replies.</p>
+<p><strong>The wedge:</strong> generic job-search tools (Teal, Jobright, Huntr) show the same 500-applicant postings to everyone. FirstInLine finds early-signal opportunities and does the personalization work that actually moves the needle — for the one audience that understands pipeline thinking: salespeople.</p>
+<p><strong>Model:</strong> freemium SaaS. Free tier (throttled, weekly runs) → Pro $29/mo (daily runs, unlimited leads, all outreach features). Launch price $19/mo.</p>
+<p><strong>Ask:</strong> none external — bootstrapped, launchable for &lt; $50 (existing VPS, existing Oxylabs credits, domain + Stripe only).</p>
+<hr />
+<h2>2. Problem</h2>
+<ol>
+<li><strong>Discovery is broken:</strong> job seekers use the same boards and see the same postings, often applying days after posting — competing with 300-500+ applicants.</li>
+<li><strong>Outreach is ignored:</strong> recruiters receive hundreds of generic "motivated self-starter" messages. Personalization is the difference between a reply and a delete, but most people don't do it because it's tedious.</li>
+<li><strong>No pipeline thinking:</strong> job seekers don't track their search like a sales funnel — no follow-up cadence, no pipeline stages, no measurement. Salespeople know this is exactly how you win.</li>
+<li><strong>Stealth/early roles are invisible:</strong> the best opportunities (founding SDR at a YC startup, a manager posting "we're hiring" on LinkedIn) are the hardest to find — they sit on direct ATS pages and VC boards, not Indeed.</li>
+</ol>
+<h2>3. Solution</h2>
+<p>A web app that runs the user's job search like a sales motion:</p>
+<ul>
+<li><strong>Early-signal discovery engine</strong> — targeted scraper (Oxylabs) across 4+ channels: direct Greenhouse/Ashby ATS postings, LinkedIn hiring posts, VC/YC portfolio boards, regional tech ecosystems.</li>
+<li><strong>AI scoring</strong> — Gemini reads each lead against the user's resume and outputs a match score (90-99), clean company name, and "why you fit."</li>
+<li><strong>AI outreach generator</strong> — a 150-character LinkedIn connection note + a short cold email, personalized per company, with placeholders.</li>
+<li><strong>Application CRM</strong> — pipeline board: Saved → Applied → Replied → Interview → Offer.</li>
+<li><strong>Weekly digest</strong> — email summary of new early-signal leads.</li>
+<li><strong>User profiles</strong> — paste resume, pick target queries (role type, industry, location, remote).</li>
+</ul>
+<h2>4. Market</h2>
+<h3>TAM/SAM/SOM (conservative)</h3>
+<ul>
+<li><strong>TAM:</strong> ~4M US sales professionals (Bureau of Labor Statistics: sales &amp; related occupations). Job seekers at any given time: ~10-15% → ~500K.</li>
+<li><strong>SAM:</strong> tech/SaaS salespeople actively job hunting (SDR/BDR/AE): ~150-250K US.</li>
+<li><strong>SOM (year 1):</strong> 500-1,000 paying users via organic + community distribution.</li>
+</ul>
+<h3>Competition</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Gap FirstInLine exploits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Teal</td>
+<td>Resume builder + job tracker</td>
+<td>Generic boards, no early-signal, no outreach</td>
+</tr>
+<tr>
+<td>Jobright</td>
+<td>AI job matching</td>
+<td>Late discovery, generic outreach</td>
+</tr>
+<tr>
+<td>Huntr</td>
+<td>Job application tracker</td>
+<td>No discovery engine, no AI outreach</td>
+</tr>
+<tr>
+<td>Sonara</td>
+<td>Auto-apply</td>
+<td>Spray-and-pray, no personalization</td>
+</tr>
+<tr>
+<td>Simplify</td>
+<td>Auto-fill applications</td>
+<td>Speed, not signal</td>
+</tr>
+<tr>
+<td>PathWise</td>
+<td>Career coaching</td>
+<td>Not a tool</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Positioning:</strong> "The salesperson's job search tool." We don't compete on volume — we compete on signal + personalization. The ICP <em>is</em> the marketing: salespeople understand "pipeline," "ICP," "outreach" instantly.</p>
+<h2>5. Business Model</h2>
+<h3>Pricing</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Price</th>
+<th>Includes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td>$0</td>
+<td>5 leads/run, weekly runs, basic tracker</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$29/mo ($19 launch)</td>
+<td>Daily runs, unlimited leads, AI outreach, digest, priority support</td>
+</tr>
+<tr>
+<td>Annual</td>
+<td>$228/yr (2 months free)</td>
+<td>Everything in Pro</td>
+</tr>
+</tbody>
+</table>
+<h3>Unit economics (targets)</h3>
+<ul>
+<li><strong>Data cost per Pro user/month:</strong> ~$1-2 (Oxylabs credits + Gemini). Daily runs × ~4 credits/run × ~$0.003-0.01/credit + Gemini pennies.</li>
+<li><strong>Gross margin:</strong> &gt; 90% at scale.</li>
+<li><strong>CAC:</strong> $0-15 (organic/community-led; referral program).</li>
+<li><strong>LTV (12-mo avg retention):</strong> ~$228-348. LTV:CAC &gt; 15:1.</li>
+<li><strong>Churn reality:</strong> job seekers churn when hired — that's the <em>success</em> outcome. Mitigate with referral gifts + alumni network.</li>
+</ul>
+<h3>Revenue scenarios (Year 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Paying users</th>
+<th>MRR</th>
+<th>ARR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conservative</td>
+<td>300</td>
+<td>$5,700</td>
+<td>$68K</td>
+</tr>
+<tr>
+<td>Base</td>
+<td>600</td>
+<td>$11,400</td>
+<td>$137K</td>
+</tr>
+<tr>
+<td>Stretch</td>
+<td>1,200</td>
+<td>$22,800</td>
+<td>$274K</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Go-to-Market</h2>
+<h3>Phase 0 — Validation (Week 1)</h3>
+<ul>
+<li>Landing page + waitlist (one-pager pitch)</li>
+<li>10 conversations with real salespeople → gate: 5 "I'd pay $19-29/mo"</li>
+</ul>
+<h3>Phase 1 — Launch (Weeks 2-6)</h3>
+<ul>
+<li>Build MVP (productize existing scripts → web app)</li>
+<li>Invite waitlist, dogfood (founder's own job hunt = live case study)</li>
+<li><strong>Content engine:</strong> founder posts the journey on LinkedIn — he IS the ICP. "I built an AI tool to find my next SDR role" is the story.</li>
+</ul>
+<h3>Phase 2 — Distribution (Week 8+)</h3>
+<ul>
+<li>Communities: r/sales, r/SDR, r/techsales, SDR Discords, tech sales Slack groups</li>
+<li>Referral program: free month per referral; hired users gift months to their network</li>
+<li>Product Hunt launch + sales-coach/community partnerships</li>
+<li><strong>SEO:</strong> "SDR job search," "how to find B2B sales jobs," "best job search tools for sales" content</li>
+</ul>
+<h3>Phase 3 — Expand (Month 3+)</h3>
+<ul>
+<li>Verticals: AE, CS, marketing, design, engineering</li>
+<li>Sources: Lever, Workable, SmartRecruiters, YC/VC APIs</li>
+<li>Features: interview prep, salary intel, company research packs, auto-apply drafts</li>
+</ul>
+<h2>7. Operations &amp; Tech</h2>
+<h3>Stack (boring on purpose)</h3>
+<ul>
+<li><strong>Backend:</strong> Python (existing scripts) → FastAPI service</li>
+<li><strong>Data:</strong> SQLite (start) → Postgres (scale)</li>
+<li><strong>AI:</strong> Google Gemini API (existing key)</li>
+<li><strong>Scraping:</strong> Oxylabs Realtime API (existing account, ~893 credits)</li>
+<li><strong>Frontend:</strong> existing dashboard HTML → React/Next (only after validation)</li>
+<li><strong>Auth:</strong> magic-link (email OTP) — no password storage</li>
+<li><strong>Payments:</strong> Stripe Checkout (no subscription engine at first)</li>
+<li><strong>Email:</strong> Resend (free tier)</li>
+<li><strong>Deploy:</strong> this VPS, Docker, Caddy/nginx + Cloudflare</li>
+<li><strong>Cost to launch:</strong> &lt; $50</li>
+</ul>
+<h3>Data &amp; ToS compliance (critical)</h3>
+<ul>
+<li>Scrape via Oxylabs (licensed data provider) — never resell raw scraped datasets</li>
+<li>Position product as "discovery + assistant," not a data broker</li>
+<li>Respect robots.txt, rate limits, per-source terms</li>
+<li>Privacy: user resumes are sensitive — encrypt at rest, never train on user data without consent, delete-on-request</li>
+</ul>
+<h2>8. Roadmap</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Timeline</th>
+<th>Deliverables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0. Validate</td>
+<td>Week 1</td>
+<td>Name, domain, landing, 10 interviews, 5 yeses</td>
+</tr>
+<tr>
+<td>1. Productize</td>
+<td>Weeks 2-3</td>
+<td>Secrets→.env, core package, multi-user, auth</td>
+</tr>
+<tr>
+<td>2. MVP</td>
+<td>Weeks 4-6</td>
+<td>Feed UI, outreach generator, tracker, digest, deploy</td>
+</tr>
+<tr>
+<td>3. Monetize</td>
+<td>Weeks 6-7</td>
+<td>Stripe, free/pro tiers, usage caps</td>
+</tr>
+<tr>
+<td>4. Launch</td>
+<td>Week 8</td>
+<td>Waitlist → paid, Product Hunt, community push</td>
+</tr>
+<tr>
+<td>5. Scale</td>
+<td>Month 3+</td>
+<td>Verticals, sources, AI upgrades, frontend rebuild</td>
+</tr>
+</tbody>
+</table>
+<h2>9. Risks &amp; Mitigations</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Severity</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scraping ToS (LinkedIn/ATS)</td>
+<td>High</td>
+<td>Oxylabs licensed provider; no raw resale; assistant positioning</td>
+</tr>
+<tr>
+<td>Oxylabs credit cost</td>
+<td>Medium</td>
+<td>Dedup cache (built), usage caps, per-user throttling</td>
+</tr>
+<tr>
+<td>Churn on hire</td>
+<td>Medium</td>
+<td>Referral gifts, alumni network, "success = churn" framing</td>
+</tr>
+<tr>
+<td>Crowded market</td>
+<td>Medium</td>
+<td>Early-signal wedge + sales-native positioning; don't compete on volume</td>
+</tr>
+<tr>
+<td>Founder distraction (job hunt)</td>
+<td>Medium</td>
+<td>Dogfood: the job hunt IS the demo; product ships while he searches</td>
+</tr>
+<tr>
+<td>Single point of failure (one dev)</td>
+<td>Low</td>
+<td>Boring stack, documented scripts, freelance frontend later</td>
+</tr>
+</tbody>
+</table>
+<h2>10. Team</h2>
+<p><strong>Joseph Goydish II — Founder.</strong> 3.5+ years B2B cybersecurity SaaS sales (Cyberbit, FortifyData); self-taught security researcher with 5 NVD-published Apple CVEs (CISA KEV, CVSS 10.0); D1 NCAA athlete (discipline, coachability, composure under pressure). Built the entire MVP solo. He is the ICP, the first customer, and the marketing story.</p>
+<h2>11. Financial Plan (Year 1, base case)</h2>
+<h3>Costs</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Monthly</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPS</td>
+<td>$0</td>
+<td>existing</td>
+</tr>
+<tr>
+<td>Oxylabs</td>
+<td>$20-40</td>
+<td>scales with users; monitor</td>
+</tr>
+<tr>
+<td>Gemini</td>
+<td>$5-15</td>
+<td>pennies per run</td>
+</tr>
+<tr>
+<td>Domain + email</td>
+<td>$2</td>
+<td></td>
+</tr>
+<tr>
+<td>Stripe fees</td>
+<td>2.9% + 30¢</td>
+<td>variable</td>
+</tr>
+<tr>
+<td>Total fixed</td>
+<td>~$30-60/mo</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Revenue (base case)</h3>
+<ul>
+<li>600 paying users × $19 avg = $11,400 MRR by month 12</li>
+<li>Ramp: 0 → 50 → 150 → 300 → 450 → 600 (organic + community)</li>
+<li><strong>Year 1 ARR: ~$137K, gross margin &gt; 85%</strong></li>
+</ul>
+<h2>12. The Founder's Edge (why this wins or dies)</h2>
+<p><strong>Wins if:</strong> the early-signal wedge is real (it is — the harvest proves it), the ICP responds to the sales-native pitch (they will — it's how they think), and the founder ships fast while living the problem (he is).</p>
+<p><strong>Dies if:</strong> validation shows salespeople won't pay (Phase 0 gate catches this before cost), or Oxylabs/ToS kills the discovery engine (mitigated by provider + positioning).</p>
+<p><strong>Bottom line:</strong> a $50 launch, a founder who is the customer, and a wedge no incumbent owns. Worst case: a great portfolio piece and a better job hunt. Best case: a real company.</p></body></html>

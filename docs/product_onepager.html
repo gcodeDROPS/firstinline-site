@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'>
+<style>
+body { font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+       max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1a202c; line-height: 1.6; }
+h1 { font-size: 1.9em; border-bottom: 3px solid #3b82f6; padding-bottom: 8px; }
+h2 { font-size: 1.4em; margin-top: 1.6em; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+h3 { font-size: 1.15em; margin-top: 1.2em; }
+code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+pre { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; font-size: 0.92em; }
+th { background: #f1f5f9; }
+blockquote { border-left: 4px solid #3b82f6; margin: 12px 0; padding: 4px 16px; background: #f8fafc; color: #475569; }
+hr { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+li { margin: 4px 0; }
+</style>
+</head><body><h1>FirstInLine (working name) — One-Pager</h1>
+<h2>What I built</h2>
+<p>An AI-powered job-hunt command center that finds B2B sales jobs <strong>before they get flooded</strong> and writes the outreach that <strong>gets replies</strong>.</p>
+<h2>The problem</h2>
+<p>Job seekers all use the same boards, see the same postings, and apply late — competing with 500+ applicants per role. Recruiters get 200 identical "I'm a motivated self-starter" messages and ignore almost all of them.</p>
+<h2>How I built it (the story)</h2>
+<p>I was hunting for my own SDR/BDR role and got tired of the standard grind. So I built a system the way a good sales rep builds pipeline:</p>
+<ol>
+<li><strong>A scraper engine</strong> (Python + Oxylabs API) that runs targeted "search dorks" against direct ATS boards (Greenhouse, Ashby), LinkedIn hiring posts, and VC-backed startup job boards — catching postings early, before they flood.</li>
+<li><strong>An AI enrichment layer</strong> (Google Gemini) that reads each lead against my resume, scores the match, extracts the clean company name, and writes a personalized outreach note under 150 characters.</li>
+<li><strong>A dashboard</strong> that turns it all into a command center: match scores, source badges, one-click hiring-manager LinkedIn searches, and ready-to-send messages.</li>
+<li><strong>A dedup cache</strong> so I never burn API credits on the same posting twice.</li>
+</ol>
+<p>Each run produces ~40 fresh, deduplicated, AI-scored leads with a direct application link and a tailored outreach message for every single one.</p>
+<h2>What it does (for a user)</h2>
+<ul>
+<li><strong>Finds early-signal leads:</strong> direct ATS postings, stealth startups, VC portfolio boards, and managers posting "we're hiring" directly on LinkedIn — before the applicant flood.</li>
+<li><strong>Scores every lead:</strong> AI match score against <em>your</em> resume, so you spend time on the right roles.</li>
+<li><strong>Writes your outreach:</strong> a 150-character LinkedIn note and a cold email, personalized per company.</li>
+<li><strong>Tracks your pipeline:</strong> applied → replied → interview → offer, like a sales CRM for your job search.</li>
+<li><strong>Sends a weekly digest:</strong> "7 new early-signal leads this week" straight to your inbox.</li>
+</ul>
+<h2>Who it helps (everyday people)</h2>
+<ul>
+<li><strong>SDRs, BDRs, AEs</strong> (the core audience): salespeople who know the game and want an edge.</li>
+<li><strong>Any competitive job seeker:</strong> recent grads, career switchers, people in crowded fields (marketing, product, design, engineering) — anyone applying to roles where being early and personal wins.</li>
+<li><strong>People who hate networking theater:</strong> the tool writes the personalized note for you; you just send it.</li>
+</ul>
+<h2>The unfair advantage</h2>
+<p>Most job tools (Teal, Jobright, Huntr) show you the same flooded postings everyone else sees. This finds the ones <strong>before</strong> they flood — the way a great sales rep finds pipeline before the market does. And it speaks the language of the person using it: pipeline, ICP, outreach, follow-through.</p>
+<h2>The pitch in one line</h2>
+<p><strong>"Treat your job search like a sales pipeline — find the role before the flood, and get a reply when you reach out."</strong></p>
+<h2>Status</h2>
+<p>Working MVP (my own job hunt is the live demo). ~40 leads per run, ~893 Oxylabs credits in the tank, dashboard live. Next: validation, productize, launch.</p></body></html>
