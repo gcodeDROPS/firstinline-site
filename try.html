@@ -209,6 +209,10 @@
   .tlead .info .role { font-size: .85rem; color: var(--text); opacity: .8; }
   .tlead .info .meta { font-size: .78rem; color: var(--muted); margin-top: 4px; }
   .tlead a { font-size: .78rem; }
+  .ai-box { max-width: 640px; margin: 0 auto 18px; }
+  .ai-upload { display: flex; gap: 12px; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .res-file { color: var(--muted); font-size: .85rem; }
+  .ai-hint { font-size: .8rem; color: var(--muted); margin-top: 8px; min-height: 1em; }
   .tool-nav { position: sticky; top: 0; z-index: 50; background: rgba(9,13,22,.86); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
   .tool-nav-inner { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; max-width: 1100px; margin: 0 auto; }
   .logo { font-weight: 800; font-size: 1.1rem; }
@@ -225,7 +229,22 @@
 
 <div class="tool-hero">
   <h1>See what the day brings</h1>
-  <p>Type a role, a city, or both. FirstInLine pulls live openings straight from the companies that post them first — no reposting, no noise.</p>
+  <p>Type a role, a city, or both. Upload your resume and let AI find the fit — or search hands-on.</p>
+
+  <div class="ai-box">
+    <div class="ai-upload">
+      <label class="btn btn-primary" for="resumeFile" style="cursor:pointer;">Upload resume</label>
+      <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx" style="display:none;">
+      <span class="res-file" id="resumeName">No resume loaded</span>
+    </div>
+    <div class="tool-search">
+      <input class="search" id="toolQ" type="text" placeholder="e.g. I'm an SDR looking for remote roles that pay $80k+">
+      <button class="btn btn-primary" id="toolGo" type="button">Search</button>
+      <button class="btn btn-ghost" id="aiGo" type="button" style="display:none;">AI match</button>
+    </div>
+    <div class="ai-hint" id="aiHint"></div>
+  </div>
+
   <div class="tool-search">
     <input class="search" id="toolQ" type="text" placeholder="e.g. SDR in Atlanta  or  remote BDR  or  Account Executive">
     <button class="btn btn-primary" id="toolGo" type="button">Search</button>
@@ -269,6 +288,12 @@ const TOOL_BOARDS = [
   ["lever","twodots"],
 ];
 const TOOL_CACHE = {};
+
+function roleBadge(rt){
+  const map={sdr:['SDR','#22d3ee'],bdr:['BDR','#a78bfa'],inside:['Inside','#34d399'],ae:['AE','#fbbf24'],other:['Other','#64748b']};
+  const m=map[rt]||map.other;
+  return '<span class="role-badge" style="background:'+m[1]+'22;color:'+m[1]+';border-color:'+m[1]+'55">'+m[0]+'</span>';
+}
 
 function esc(x){ return String(x==null?'':x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
@@ -360,6 +385,94 @@ document.getElementById('toolGo').addEventListener('click',toolRun);
 document.getElementById('toolQ').addEventListener('keydown',e=>{ if(e.key==='Enter') toolRun(); });
 toolRun();
 
+// Phase 2: resume upload + AI-assisted match
+let resumeText = '';
+document.getElementById('resumeFile').addEventListener('change', async function(ev){
+  const f = ev.target.files[0];
+  if(!f) return;
+  const name = document.getElementById('resumeName');
+  const hint = document.getElementById('aiHint');
+  name.textContent = f.name;
+  hint.textContent = 'Reading resume...';
+  try{
+    if(f.name.toLowerCase().endsWith('.pdf')){
+      if(!window.pdfjsLib){
+        await new Promise((res,rej)=>{
+          const s=document.createElement('script');
+          s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+          s.onload=res; s.onerror=rej; document.head.appendChild(s);
+        });
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+      const buf = await f.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+      let txt = '';
+      for(let i=1;i<=pdf.numPages;i++){
+        const page = await pdf.getPage(i);
+        const tc = await page.getTextContent();
+        txt += tc.items.map(it=>it.str).join(' ') + '\n';
+      }
+      resumeText = txt;
+    } else {
+      resumeText = await f.text();
+    }
+    hint.innerHTML = '<span class="ai-note">Resume loaded \u2014 ' + resumeText.length + ' chars extracted. Ask AI to match it against live openings.</span>';
+    document.getElementById('aiGo').style.display = 'inline-block';
+  }catch(e){
+    hint.textContent = 'Could not read that file. Try a .txt or .pdf.';
+  }
+});
+
+document.getElementById('aiGo').addEventListener('click', async function(){
+  const hint = document.getElementById('aiHint');
+  const q = document.getElementById('toolQ').value.trim();
+  hint.innerHTML = '<span class="ai-note">Matching your resume against live openings...</span>';
+  const el = document.getElementById('toolResults');
+  el.innerHTML = '<div class="empty">Scanning ' + TOOL_BOARDS.length + ' boards...</div>';
+  const all = [];
+  for(const [kind,slug] of TOOL_BOARDS){
+    const jobs = await toolFetch(kind,slug);
+    for(const j of jobs) all.push(j);
+  }
+  const resumeWords = (resumeText||'').toLowerCase().split(/[^a-z0-9+]+/).filter(w=>w.length>3);
+  const stop = new Set(['the','and','for','with','that','this','from','you','your','have','are','was','were','job','work','role','company','position','would','will','can','our','their','they','them','sales','experience','business','development','representative','team','new','all','not','but','into','about','over','also','than','then','when','what']);
+  const keyWords = [...new Set(resumeWords.filter(w=>!stop.has(w)))];
+  const qWords = q.toLowerCase().split(/[^a-z0-9+]+/).filter(w=>w.length>2);
+  function norm(t){
+    return String(t||'').toLowerCase()
+      .replace(/sales development/g,'sdr').replace(/business development/g,'bdr')
+      .replace(/account executive/g,'ae').replace(/inside sales/g,'inside');
+  }
+  const scored = all.map(j=>{
+    const hay = norm(j.title+' '+j.location+' '+j.company);
+    let s = 0;
+    for(const w of keyWords){ if(hay.includes(norm(w))) s+=1; }
+    for(const w of qWords){ if(hay.includes(norm(w))) s+=2; }
+    j.score = s;
+    return j;
+  }).filter(j=>j.score>0).sort((a,b)=>b.score-a.score);
+  const seen={}; const uniq=[];
+  for(const j of scored){ const k=(j.title+'|'+j.company).toLowerCase(); if(!seen[k]){seen[k]=1;uniq.push(j);} }
+  document.getElementById('toolStats').innerHTML =
+    '<div class="tool-stat"><b>'+uniq.length+'</b><span>best matches</span></div>'+
+    '<div class="tool-stat"><b>'+TOOL_BOARDS.length+'</b><span>boards checked</span></div>';
+  if(!uniq.length){
+    el.innerHTML = '<div class="empty">No strong match found. Try a different query or resume.</div>';
+    hint.innerHTML='';
+    return;
+  }
+  el.innerHTML = uniq.slice(0,30).map(j=>{
+    const loc = j.location?esc(j.location):'';
+    const date = j.date?esc(j.date.slice(0,10)):'';
+    const badge = j.roleTag?roleBadge(j.roleTag):'';
+    return '<div class="tlead"><div class="info"><b>'+esc(j.company)+'</b> '+badge+
+      '<div class="role">'+esc(j.title)+'</div>'+
+      '<div class="meta">'+loc+(date?' \u00b7 '+date:'')+' \u00b7 score '+j.score+'</div></div>'+
+      (j.url?'<a href="'+esc(j.url)+'" target="_blank" rel="noopener">View \u2192</a>':'')+
+      '</div>';
+  }).join('');
+  hint.innerHTML = '<span class="ai-note">Done \u2014 ranked by how well each opening matches your resume and search.</span>';
+});
 </script>
 </body>
 </html>
