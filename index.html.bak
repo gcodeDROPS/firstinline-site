@@ -126,21 +126,6 @@
   .st-actions button { font-size: .72rem; padding: 4px 9px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); cursor: pointer; }
   .st-actions button.on { border-color: var(--accent); color: var(--accent); }
   .empty { text-align: center; color: var(--muted); padding: 40px 0; }
-  .tool-search { display: flex; gap: 10px; max-width: 640px; margin: 0 auto 14px; }
-  .tool-search .search { flex: 1; }
-  .tool-options { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px; align-items: center; }
-  .tool-chip { padding: 7px 13px; }
-  .tool-stats { display: flex; gap: 14px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
-  .tool-stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; text-align: center; }
-  .tool-stat b { display: block; font-size: 1.3rem; color: var(--primary); }
-  .tool-stat span { font-size: .75rem; color: var(--muted); }
-  .tool-company { font-size: .72rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; display: inline-block; margin-bottom: 6px; }
-  .tlead { display: flex; align-items: flex-start; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; background: var(--card); }
-  .tlead .info { flex: 1; min-width: 0; }
-  .tlead .info b { font-size: .98rem; }
-  .tlead .info .role { font-size: .85rem; color: var(--text); opacity: .8; }
-  .tlead .info .meta { font-size: .78rem; color: var(--muted); margin-top: 4px; }
-  .tlead a { font-size: .78rem; }
 
   .case { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
   .case-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; }
@@ -201,7 +186,6 @@
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#app">Live demo</a>
-      <a href="#try">Run it yourself</a>
       <a href="#case">Real results</a>
       <a href="#pricing">Pricing</a>
       <a href="/docs/" class="nav-cta">Docs</a>
@@ -277,34 +261,6 @@
 
     <div id="leadList"></div>
     <div class="empty" id="empty" style="display:none;">No leads match this view.</div>
-  </div>
-</section>
-
-<section id="try" class="app" style="background: var(--bg); border-top: 1px solid var(--border);">
-  <div class="wrap">
-    <div class="sec-label">Run it yourself</div>
-    <div class="app-head">
-      <h2>See what the day brings</h2>
-      <div class="app-sub">Type a role, a city, or both. FirstInLine pulls live openings straight from the companies that post them first — no reposting, no noise.</div>
-    </div>
-    <div class="app-notice">🔒 <b>Try it:</b> this searches the live job boards of 80+ companies. Your searches stay in your browser.</div>
-
-    <div class="tool-search">
-      <input class="search" id="toolQ" type="text" placeholder="e.g. SDR in Atlanta  or  remote BDR  or  Account Executive">
-      <button class="btn btn-primary" id="toolGo" type="button">Search</button>
-    </div>
-
-    <div class="tool-options">
-      <span class="role-label">Role:</span>
-      <button class="chip tool-chip active" data-tool="all">All</button>
-      <button class="chip tool-chip" data-tool="sdr">SDR</button>
-      <button class="chip tool-chip" data-tool="bdr">BDR</button>
-      <button class="chip tool-chip" data-tool="inside">Inside</button>
-      <button class="chip tool-chip" data-tool="ae">AE</button>
-    </div>
-
-    <div class="tool-stats" id="toolStats"></div>
-    <div id="toolResults"><div class="empty" id="toolEmpty" style="display:none;">No live openings match. Try a different role or location.</div></div>
   </div>
 </section>
 
@@ -3314,118 +3270,6 @@ document.getElementById('waitlistForm').addEventListener('submit',async e=>{
     `<div class="hero-mini"><b>${ready}</b><span>outreach ready</span></div>`;
 })();
 render();
-
-// ===== Try-it tool: live free ATS search =====
-const TOOL_BOARDS = [
-  ["gh","securityscorecard"],["gh","databricks"],["gh","stripe"],["gh","anthropic"],["gh","datadog"],
-  ["gh","mongodb"],["gh","zscaler"],["gh","okta"],["gh","cloudflare"],["gh","brex"],["gh","samsara"],
-  ["gh","figma"],["gh","twilio"],["gh","asana"],["gh","rubrik"],["gh","vercel"],["gh","onetrust"],
-  ["gh","abnormalsecurity"],["gh","commvault"],["gh","guidepointsecurity"],["gh","newrelic"],
-  ["gh","linkedin"],["gh","banyansoftware"],["gh","wonderschool"],["gh","connectwise"],["gh","attentive"],
-  ["gh","doppel"],["gh","newsela"],["gh","array"],["gh","pistontechnologies"],["gh","airtable"],
-  ["gh","processstreet"],["gh","eolapower"],["gh","minitab"],["gh","ohalogenetics"],["gh","enginy"],
-  ["gh","everdriven"],["gh","buynomics"],["gh","seed"],["gh","rockbot"],["gh","instabase"],["gh","jampp"],
-  ["gh","lucenia"],["gh","orca"],
-  ["ashby","openai"],["ashby","harvey"],["ashby","clera"],["ashby","decagon"],["ashby","ramp"],
-  ["ashby","notion"],["ashby","plaid"],["ashby","vanta"],["ashby","dandy"],["ashby","baseten"],
-  ["ashby","pragmatike"],["ashby","temporal"],["ashby","drata"],["ashby","metaview"],["ashby","linear"],
-  ["ashby","netic"],["ashby","roboflow"],["ashby","tremendous"],["ashby","numeric"],["ashby","doppel"],
-  ["ashby","arena"],["ashby","laurel"],["ashby","outset"],["ashby","arketa"],["ashby","camber"],
-  ["ashby","furtherai"],["ashby","glimpse"],["ashby","raindrop"],["ashby","automat"],["ashby","ycombinator"],
-  ["ashby","ajax"],["ashby","popl"],["ashby","runway"],["ashby","aibidia"],["ashby","rubie"],
-  ["ashby","30mpc"],["ashby","conduit"],["ashby","hubstaff"],
-  ["lever","ajax"],["lever","lendbuzz"],["lever","linkedin"],["lever","sysdig"],["lever","finquery"],
-  ["lever","twodots"],
-];
-const TOOL_CACHE = {};
-
-async function toolFetch(kind, slug){
-  const key = kind+'/'+slug;
-  if(TOOL_CACHE[key]) return TOOL_CACHE[key];
-  let url;
-  if(kind==='gh') url='https://boards-api.greenhouse.io/v1/boards/'+slug+'/jobs';
-  else if(kind==='ashby') url='https://api.ashbyhq.com/posting-api/job-board/'+slug;
-  else url='https://api.lever.co/v0/postings/'+slug+'?mode=json';
-  try{
-    const r = await fetch(url);
-    if(!r.ok) return [];
-    const d = await r.json();
-    let jobs = [];
-    if(kind==='gh') jobs = d.jobs||[];
-    else if(kind==='ashby') jobs = d.jobs||[];
-    else jobs = d||[];
-    const norm = jobs.map(j=>({
-      company: j.company ? (j.company.name||slug) : slug,
-      title: j.title||j.name||'',
-      loc: (j.location&&(j.location.name||j.location))||'',
-      url: j.absolute_url||j.jobUrl||j.applyUrl||j.hostedUrl||'',
-      date: j.updated_at||j.published_at||j.first_published_at||'',
-    }));
-    TOOL_CACHE[key]=norm;
-    return norm;
-  }catch(e){ return []; }
-}
-
-function toolMatch(job, q, role){
-  const hay = (job.title+' '+job.location+' '+job.company).toLowerCase();
-  if(role!=='all' && !hay.includes(role)) return false;
-  if(!q) return true;
-  const words = q.toLowerCase().split(/\s+/).filter(w=>w.length>1 && !['in','at','the','for','a','an'].includes(w));
-  return words.every(w=>hay.includes(w));
-}
-function toolRole(job){
-  const t=job.title.toLowerCase();
-  if(t.includes('sales development')||t.indexOf('sdr')>=0) return 'sdr';
-  if(t.includes('business development')||t.indexOf('bdr')>=0) return 'bdr';
-  if(t.includes('inside sales')) return 'inside';
-  if(t.includes('account executive')||t.indexOf('ae')>=0) return 'ae';
-  return '';
-}
-async function toolRun(){
-  const q = document.getElementById('toolQ').value.trim();
-  const active = document.querySelector('.tool-chip.active');
-  const role = active?active.dataset.tool:'all';
-  const el = document.getElementById('toolResults');
-  const stats = document.getElementById('toolStats');
-  el.innerHTML = '<div class="empty">Searching 80+ live boards…</div>';
-  const all=[];
-  for(const [kind,slug] of TOOL_BOARDS){
-    const jobs = await toolFetch(kind,slug);
-    for(const j of jobs){
-      const r = toolRole(j);
-      if(role!=='all' && r!==role) continue;
-      if(!toolMatch(j,q,'all')) continue;
-      all.push({...j, roleTag:r});
-    }
-  }
-  all.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-  const seen={}; const uniq=[];
-  for(const j of all){ const k=(j.title+'|'+j.company).toLowerCase(); if(!seen[k]){seen[k]=1;uniq.push(j);} }
-  stats.innerHTML =
-    `<div class="tool-stat"><b>${uniq.length}</b><span>live matches</span></div>`+
-    `<div class="tool-stat"><b>${TOOL_BOARDS.length}</b><span>boards checked</span></div>`;
-  if(!uniq.length){ el.innerHTML='<div class="empty">No live openings match. Try a different role or location.</div>'; return; }
-  el.innerHTML = uniq.slice(0,60).map(j=>{
-    const loc = j.location?esc(j.location):'';
-    const date = j.date?esc(j.date.slice(0,10)):'';
-    const badge = j.roleTag?`<span class="role-badge" style="background:#22d3ee22;color:#22d3ee;border-color:#22d3ee55">${j.roleTag.toUpperCase()}</span>`:'';
-    return `<div class="tlead">
-      <div class="info">
-        <b>${esc(j.company)}</b> ${badge}
-        <div class="role">${esc(j.title)}</div>
-        <div class="meta">${loc}${date?' · '+date:''}</div>
-      </div>
-      ${j.url?`<a href="${esc(j.url)}" target="_blank" rel="noopener">View →</a>`:''}
-    </div>`;
-  }).join('');
-}
-document.querySelectorAll('.tool-chip').forEach(c=>c.addEventListener('click',()=>{
-  document.querySelectorAll('.tool-chip').forEach(x=>x.classList.remove('active'));
-  c.classList.add('active'); toolRun();
-}));
-document.getElementById('toolGo').addEventListener('click',toolRun);
-document.getElementById('toolQ').addEventListener('keydown',e=>{ if(e.key==='Enter') toolRun(); });
-toolRun();
 </script>
 </body>
 </html>
